@@ -1,0 +1,160 @@
+/* Shared UI primitives (Linear system). Linked in the document and in the workspace shadow root,
+   so new views use the same parts: ui-btn, ui-badge, ui-card, ui-row, ui-stat, ui-state, ui-skeleton. */
+.ui-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:30px;padding:0 12px;font:var(--weight-medium) 13px/1 var(--font-ui);color:var(--text-body);background:transparent;border:1px solid var(--border-soft);border-radius:var(--radius-control);cursor:pointer;text-decoration:none;white-space:nowrap}
+.ui-btn:hover{background:var(--bg-hover);border-color:var(--border-mid);color:var(--text-primary)}
+.ui-btn--primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ui-btn--primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);color:var(--accent-ink)}
+.ui-btn--icon{width:30px;padding:0}
+.ui-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 7px;font:var(--weight-medium) 11px/1.2 var(--font-ui);color:var(--text-secondary);background:var(--bg-glass-3);border-radius:var(--radius-badge);white-space:nowrap}
+.ui-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--text-tertiary)}
+.ui-badge--ok::before{background:var(--status-live)}.ui-badge--error::before{background:var(--status-error)}.ui-badge--warn::before{background:var(--status-warn)}.ui-badge--info::before{background:var(--status-info)}.ui-badge--iris::before{background:var(--status-pending)}.ui-badge--lavender::before{background:var(--status-category)}
+.ui-badge--plain::before{display:none}
+.ui-card{background:var(--bg-glass-1);border:1px solid var(--border-soft);border-radius:var(--radius-card);padding:var(--space-card)}
+.ui-card--subtle{background:var(--bg-glass-1);border-radius:var(--radius-control);box-shadow:var(--shadow-sm);padding:8px}
+.ui-row{display:flex;align-items:center;gap:12px;min-height:40px;padding:8px 0;border-bottom:1px solid var(--border-soft)}
+.ui-row:last-child{border-bottom:0}
+.ui-row>.ui-row-main{flex:1;min-width:0}
+.ui-row strong{display:block;font:var(--weight-medium) 13px/1.4 var(--font-ui);color:var(--text-primary)}
+.ui-row small{display:block;font-size:12px;color:var(--text-secondary)}
+.ui-stat small{display:block;font:var(--weight-medium) 12px/1.3 var(--font-ui);color:var(--text-secondary)}
+.ui-stat strong{display:block;font:var(--weight-strong) 26px/1.15 var(--font-ui);letter-spacing:var(--tracking-tight);color:var(--text-primary);font-variant-numeric:tabular-nums}
+.ui-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-tertiary)}
+.ui-kbd{font:500 11px/1 var(--font-mono)}
+.ui-callout{padding:11px 14px;background:var(--bg-glass-2);border:1px solid var(--border-soft);border-radius:var(--radius-control);font-size:13px;color:var(--text-body)}
+
+/* One state view for empty, offline, login, setup, uncertain and error results. */
+.ui-state{display:grid;justify-items:center;gap:8px;padding:40px 24px;text-align:center;border:1px dashed var(--border-soft);border-radius:var(--radius-card);color:var(--text-secondary)}
+.ui-state-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--bg-glass-3);color:var(--text-secondary)}
+.ui-state[data-kind=offline] .ui-state-icon,.ui-state[data-kind=error] .ui-state-icon{color:var(--status-error);background:var(--status-error-wash)}
+.ui-state[data-kind=login] .ui-state-icon,.ui-state[data-kind=setup] .ui-state-icon{color:var(--status-warn);background:var(--status-warn-wash)}
+.ui-state[data-kind=uncertain] .ui-state-icon{color:var(--status-pending);background:var(--status-pending-wash)}
+.ui-state h3{margin:4px 0 0;font:var(--weight-strong) 15px/1.3 var(--font-ui);color:var(--text-primary)}
+.ui-state p{margin:0;max-width:460px;font-size:13px;line-height:1.55}
+.ui-state .ui-state-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:8px}
+
+.ui-skeleton{display:block;height:12px;border-radius:4px;background:linear-gradient(90deg,var(--bg-glass-2) 0%,var(--bg-glass-3) 50%,var(--bg-glass-2) 100%);background-size:200% 100%;animation:ui-shimmer 1.4s ease-in-out infinite}
+.ui-skeleton-card{display:grid;gap:10px;padding:18px;border:1px solid var(--border-soft);border-radius:var(--radius-card)}
+.ui-skeleton-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+@keyframes ui-shimmer{from{background-position:100% 0}to{background-position:-100% 0}}
+@media(prefers-reduced-motion:reduce){.ui-skeleton{animation:none}}
+
+/* Standalone page for a bridged console that is not running (served by hq/app.py). */
+body.ui-bridge-error{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--color-carbon);color:var(--text-body);font:13px/1.5 var(--font-ui)}
+body.ui-bridge-error .ui-state{max-width:520px;margin:24px}
+body.ui-bridge-error .ui-kbd{color:var(--text-tertiary)}
+
+/* Workflow canvas (7 Oct 2026): drawer chrome, n8n-style step cards and bezier edges.
+   Tokens only; status colours mark state, department tints mark agents. */
+.wf-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--border-soft)}
+.wf-head>div{min-width:0}
+.wf-title{margin:2px 0 0;font:var(--weight-strong) 15px/1.3 var(--font-ui);color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;outline:0}
+.wf-close,.wf-detail-close{width:30px;height:30px;padding:0;flex:none;font-size:16px;line-height:1}
+.wf-body{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}
+.wf-body>.ui-loading,.wf-body>.ui-state{margin:24px}
+.wf-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border-soft)}
+.wf-runs{max-width:min(100%,380px);height:30px;font-size:12px}
+.wf-back{height:30px;padding:0 10px;font-size:12px}
+.wf-live{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:var(--radius-pill);background:var(--status-live-wash);color:var(--status-live);font:var(--weight-medium) 11px/1.2 var(--font-ui);letter-spacing:.04em;text-transform:uppercase}
+.wf-live::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.wf-live[hidden],.wf-back[hidden],.wf-runs[hidden],.wf-note[hidden]{display:none}
+.wf-sum{margin-left:auto;font-size:12px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+.wf-note{margin:0;padding:8px 12px;font-size:12px;color:var(--text-body);background:var(--status-warn-wash);border-bottom:1px solid var(--border-soft)}
+.wf-stage{position:relative;flex:1;min-height:0;display:flex}
+.wf-viewport{position:relative;flex:1;min-width:0;overflow:hidden;cursor:grab;touch-action:none;background:radial-gradient(circle,var(--border-soft) 1px,transparent 1.3px) 0 0/20px 20px,var(--bg-panel)}
+.wf-viewport.is-dragging{cursor:grabbing}
+.wf-world{position:absolute;left:0;top:0;transform-origin:0 0}
+.wf-edges{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.wf-edge{fill:none;stroke:var(--border-mid);stroke-width:1.5}
+.wf-edge[data-kind=delegate]{stroke-dasharray:5 5}
+.wf-edge.is-gap{stroke:var(--text-tertiary);stroke-dasharray:2 6}
+.wf-edge.is-live{stroke:var(--status-live)}
+.wf-dot{fill:var(--status-live);offset-distance:0%;offset-rotate:0deg;opacity:0}
+.wf-animate .wf-dot{opacity:1;animation:wf-dot 1.4s linear infinite}
+@keyframes wf-dot{to{offset-distance:100%}}
+@media(prefers-reduced-motion:reduce){.wf-dot{display:none}}
+.wf-node{position:absolute;left:0;top:0;width:184px;height:64px;display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:9px;padding:0 10px;text-align:left;background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:var(--radius-card);color:var(--text-body);box-shadow:var(--shadow-sm);cursor:pointer}
+.wf-node:hover{background:var(--bg-card-hover);border-color:var(--border-mid)}
+.wf-node[data-active]{border-color:var(--border-glow)}
+.wf-node[data-status=error]{border-color:color-mix(in srgb,var(--status-error) 55%,var(--border-soft))}
+.wf-node[data-status=running]{border-color:color-mix(in srgb,var(--status-info) 55%,var(--border-soft))}
+.wf-node[data-status=waiting]{border-color:color-mix(in srgb,var(--status-warn) 55%,var(--border-soft))}
+.wf-node[data-kind=group]{border-style:dashed;background:var(--bg-glass-1)}
+.wf-ico{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:var(--bg-glass-3);color:var(--text-secondary);overflow:hidden}
+.wf-ico .connector-logo,.wf-ico .connector-monogram{width:26px;height:26px;padding:3px;border:0;border-radius:6px;font-size:10px}
+.wf-ico--avatar{background:none;overflow:visible}
+.wf-ico .avatar{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:color-mix(in srgb,var(--wf-dept,var(--dept-none)) 60%,transparent);color:var(--color-paper);font:590 11px/1 var(--font-ui)}
+.wf-ico .avatar[data-live=true]{box-shadow:0 0 0 2px var(--status-live)}
+.wf-txt{display:grid;gap:2px;min-width:0}
+.wf-txt b{font:var(--weight-medium) 12px/1.3 var(--font-ui);color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wf-txt small{font-size:11px;line-height:1.3;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wf-end{display:grid;justify-items:end;gap:3px}
+.wf-end small{font:400 10px/1.2 var(--font-mono);color:var(--text-tertiary);white-space:nowrap}
+/* Finished steps are calm; green stays for live signals (10 Oct 2026). */
+.wf-tick{width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,var(--status-live) 40%,var(--text-tertiary))}
+.wf-node[data-status=error] .wf-tick{background:var(--status-error)}
+.wf-node[data-status=running] .wf-tick{background:var(--status-info)}
+.wf-node[data-status=waiting] .wf-tick{background:var(--status-warn)}
+.wf-state{position:absolute;inset:0;display:grid;place-items:center;padding:24px;background:var(--bg-panel)}
+.wf-state[hidden]{display:none}
+.wf-ctl{position:absolute;left:12px;bottom:12px;display:flex;gap:4px}
+.wf-ctl button{height:28px;min-width:28px;padding:0 9px;font-size:12px;background:var(--bg-elevated)}
+.wf-detail{width:280px;flex:none;overflow-y:auto;padding:14px 16px;border-left:1px solid var(--border-soft);background:var(--bg-panel)}
+.wf-detail[hidden]{display:none}
+.wf-detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.wf-detail h3{margin:4px 0 12px;font:var(--weight-strong) 14px/1.35 var(--font-ui);color:var(--text-primary);overflow-wrap:anywhere}
+.wf-detail dl{display:grid;gap:8px;margin:0}
+.wf-detail dl div{display:grid;grid-template-columns:76px minmax(0,1fr);gap:8px;font-size:12px}
+.wf-detail dt{color:var(--text-secondary)}
+.wf-detail dd{margin:0;color:var(--text-primary);overflow-wrap:anywhere}
+.wf-links{display:grid;gap:6px;margin-top:14px}
+.wf-links button{text-align:left;font-size:12px}
+.wf-fine{margin:14px 0 0;font-size:11px;color:var(--text-tertiary)}
+#workflow-drawer .ui-loading{display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--text-secondary);font-size:13px}
+#workflow-drawer .brand-trace{display:inline-block;width:72px;aspect-ratio:2/1}
+#workflow-drawer .brand-trace svg{display:block;width:100%;height:100%;overflow:visible}
+#workflow-drawer .brand-trace path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+#workflow-drawer .trace-base{stroke:var(--color-graphite);stroke-width:8}
+#workflow-drawer .trace-draw{stroke:var(--color-smoke);stroke-width:8;stroke-dasharray:1}
+#workflow-drawer .trace-glint{stroke:var(--status-live);stroke-width:3.2;stroke-dasharray:.14 .86;animation:trace-run 1.7s linear infinite}
+@media(prefers-reduced-motion:reduce){#workflow-drawer .trace-glint{animation:none}}
+@media(max-width:640px){.wf-detail{position:absolute;inset:auto 0 0 0;width:auto;max-height:60%;border-left:0;border-top:1px solid var(--border-soft);box-shadow:var(--shadow-pop)}.wf-sum{margin-left:0;width:100%}}
+
+/* Workflow canvas, SaaS pass (10 Oct 2026): find, failures, view switch, zoom readout, far zoom, timeline. */
+.wf-find{display:inline-flex;align-items:center;gap:6px}
+.wf-find input{width:170px;height:28px;padding:0 9px;font-size:12px}
+.wf-find-count{font-size:11px;color:var(--text-tertiary);font-variant-numeric:tabular-nums;min-width:0}
+.wf-fail{height:28px;padding:0 10px;font-size:12px;color:var(--status-error);border-color:color-mix(in srgb,var(--status-error) 40%,var(--border-soft))}
+.wf-fail[hidden]{display:none}
+.wf-mode{display:inline-flex;gap:2px;padding:2px;border:1px solid var(--border-soft);border-radius:8px;background:var(--bg-panel)}
+.wf-mode button{height:24px;padding:0 9px;border:0;border-radius:6px;background:transparent;font-size:12px;color:var(--text-secondary)}
+.wf-mode button[aria-pressed=true]{background:var(--bg-elevated);color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--border-mid)}
+.wf-pct{display:inline-grid;place-items:center;min-width:44px;height:28px;padding:0 6px;font:500 11.5px/1 var(--font-mono);color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:var(--radius-sm,6px);font-variant-numeric:tabular-nums}
+.wf-ctl[hidden]{display:none}
+.wf-node[data-match]{box-shadow:0 0 0 2px color-mix(in srgb,var(--status-info) 70%,transparent)}
+/* Far zoom: a card becomes a status block, so a whole run reads at a glance. */
+.wf-stage[data-far] .wf-node{padding:0;grid-template-columns:1fr;border-radius:10px;background:var(--bg-elevated)}
+.wf-stage[data-far] .wf-node>*{display:none}
+.wf-stage[data-far] .wf-node[data-status=error]{background:color-mix(in srgb,var(--status-error) 55%,var(--bg-elevated))}
+.wf-stage[data-far] .wf-node[data-status=running]{background:color-mix(in srgb,var(--status-info) 55%,var(--bg-elevated))}
+.wf-stage[data-far] .wf-node[data-status=waiting]{background:color-mix(in srgb,var(--status-warn) 55%,var(--bg-elevated))}
+.wf-stage[data-far] .wf-node[data-kind=model]{background:color-mix(in srgb,var(--color-lavender) 30%,var(--bg-elevated))}
+.wf-stage[data-far] .wf-edge{stroke-width:4px}
+.wf-timeline{flex:1;min-width:0;overflow:auto;padding:10px 12px 16px;display:flex;flex-direction:column;gap:2px}
+.wf-timeline[hidden]{display:none}
+.wf-tl-axis{display:flex;justify-content:space-between;margin:0 64px 6px 34%;font:500 11px/1 var(--font-mono);color:var(--text-tertiary)}
+.wf-tl-row{display:grid;grid-template-columns:34% minmax(0,1fr) 64px;align-items:center;gap:10px;min-height:28px;padding:3px 6px;border:0;border-radius:6px;background:transparent;text-align:left;color:var(--text-body);font-size:12.5px;cursor:pointer}
+.wf-tl-row:hover,.wf-tl-row:focus-visible{background:var(--bg-hover)}
+.wf-tl-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wf-tl-name small{margin-right:6px;color:var(--text-tertiary);font-size:11px}
+.wf-tl-track{position:relative;height:10px;border-radius:5px;background:var(--bg-glass-1)}
+.wf-tl-track i{position:absolute;top:0;bottom:0;border-radius:5px;background:color-mix(in srgb,var(--color-lavender) 70%,var(--bg-elevated))}
+.wf-tl-row[data-status=error] .wf-tl-track i{background:var(--status-error)}
+.wf-tl-row[data-status=running] .wf-tl-track i{background:var(--status-info)}
+.wf-tl-ms{text-align:right;font:500 11.5px/1 var(--font-mono);color:var(--text-secondary);font-variant-numeric:tabular-nums}
+@media(max-width:700px){.wf-find input{width:120px}.wf-tl-row{grid-template-columns:40% minmax(0,1fr) 54px}}
+
+/* Workflow minimap (10 Oct 2026). */
+.wf-mini{position:absolute;right:12px;bottom:12px;width:176px;height:132px;border:1px solid var(--border-mid);border-radius:10px;background:color-mix(in srgb,var(--bg-panel) 92%,transparent);box-shadow:var(--shadow-xl);cursor:crosshair;touch-action:none}
+.wf-mini[hidden]{display:none}
+.wf-detail:not([hidden])~.wf-mini,.wf-stage:has(.wf-detail:not([hidden])) .wf-mini{right:296px}
+@media(max-width:700px){.wf-mini{display:none}}

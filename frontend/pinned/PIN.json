@@ -1,0 +1,16 @@
+{
+  "pinnedAt": "2026-10-12T19:31:45.300Z",
+  "from": "projects/agent-hq",
+  "parts": [
+    "upgrade/web",
+    "upgrade/scripts/page-css.mjs",
+    "assets",
+    "vendor/three.js",
+    "vendor/three.core.min.js",
+    "devkit/rules.mjs",
+    "devkit/transforms.mjs",
+    "devkit/lib"
+  ],
+  "files": 228,
+  "sha256": "ef700414873cb2c61abc7c1a30e4da579f06855ea4aa4cc576f5701cd9aeb4c1"
+}

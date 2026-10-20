@@ -1,0 +1,43 @@
+/* Linear skin for the bridged Brand Factory, Brand Content OS and Messages pages (4 October 2026).
+   Fonts and raw tokens come from tokens.css; the console's own variable names are mapped here. */
+@import url('/static/tokens.css');
+html[data-theme],html[data-theme=dark],html[data-theme=light]{
+ --canvas:var(--color-carbon);--canvas-2:var(--color-void);--surface:#131416;--surface-2:var(--color-obsidian);--surface-3:var(--color-graphite);--surface-hover:rgba(255,255,255,.05);
+ --ink:var(--color-paper);--ink-strong:var(--color-paper);--ink-body:var(--color-mist);--ink-muted:var(--color-fog);--ink-faint:var(--color-ash);
+ --line:var(--color-graphite);--line-strong:var(--color-smoke);--line-faint:var(--color-graphite);
+ --ao-blue:var(--color-mist);--ao-blue-ink:var(--color-mist);--ao-blue-wash:rgba(255,255,255,.05);--ao-orange:var(--color-acid-lime);
+ --teal:var(--color-mist);--teal-ink:var(--color-mist);--teal-wash:rgba(255,255,255,.05);--factory-orange:var(--color-acid-lime);--st-live:var(--color-pulse-green);
+ --f-display:var(--font-ui);--f-sans:var(--font-ui);--f-mono:var(--font-ui);--r-xs:4px;--r-sm:6px;--r-md:12px;--r-lg:12px;color-scheme:dark
+}
+html body{font-feature-settings:var(--font-features);-webkit-font-smoothing:antialiased}
+html body,html body.factory-page{background:var(--color-carbon)!important;color:var(--color-mist);font-family:var(--font-ui);margin:0}
+html body .sidebar,html body .bg-field,html body .ao-footer,html body .ao-systembar,html body .voice-orb,html body #voice-orb,html body .cmdk,html body .ao-voice-orb,html body #aoVoiceOrb,html body .breadcrumb{display:none!important}
+html body .app{display:block!important;min-height:0}
+html body .main{margin:0!important;padding:16px 20px 32px!important;width:100%!important;max-width:none!important;min-height:0}
+html body .topbar{position:relative;background:transparent;border:0;height:auto;min-height:32px;padding:0;justify-content:flex-end}
+html body h1,html body h2,html body h3{font-family:var(--font-ui)!important;color:var(--color-paper);font-weight:590!important;letter-spacing:-.012em!important;text-transform:none!important}
+html body h1{font-size:24px!important;line-height:1.2!important}
+html body .factory-hero,html body .brand-rail,html body .factory-workspace,html body .adfactory,html body .generator,html body .brief-sheet{background:rgba(255,255,255,.02)!important;color:var(--color-mist);border:1px solid var(--color-graphite)!important;border-radius:12px!important;box-shadow:none!important}
+html body .factory-hero{padding:22px}
+html body .factory-hero h1{font-size:clamp(20px,2.2vw,28px)!important;max-width:720px}
+html body .factory-hero p{font-size:13px;line-height:1.6;color:var(--color-fog)}
+html body .factory-kicker,html body .eyebrow,html body .kicker{color:var(--color-ash)!important;font:510 11px/1.4 var(--font-ui)!important;letter-spacing:.04em}
+html body button,html body input,html body select,html body textarea{font-family:var(--font-ui)!important}
+html body button{border-radius:6px!important}
+html body input,html body select,html body textarea{background:rgba(255,255,255,.02)!important;border:1px solid rgba(255,255,255,.08)!important;color:var(--color-mist)!important;border-radius:6px!important}
+html body input:focus,html body select:focus,html body textarea:focus{border-color:var(--color-mist)!important;outline:0}
+html body .factory-tabs{background:transparent;border-color:var(--color-graphite);flex-wrap:wrap}
+html body .factory-tab[aria-selected=true],html body .brand-item.active{color:var(--color-paper)!important;border-color:var(--color-mist)!important}
+html body .btn-primary,html body button.primary,html body .cos-btn.primary{background:var(--color-acid-lime)!important;border-color:var(--color-acid-lime)!important;color:var(--color-void)!important;font-weight:510!important}
+html body #hq-brand-notice{position:sticky;top:0;z-index:100;background:var(--color-obsidian);border:1px solid var(--color-smoke);padding:12px;border-radius:6px;color:var(--color-mist)}
+html body ::selection{background:rgba(208,214,224,.24)}
+@media(max-width:700px){html body .main{padding:10px!important}html body .factory-layout{grid-template-columns:1fr}html body .brand-rail{position:static;max-height:350px;overflow:auto}html body .af-desk-grid{grid-template-columns:1fr}}
+html body .topbar{background:transparent!important;border:0!important;box-shadow:none!important}
+/* Labels: the Agent HQ small-caps rhythm instead of wide-tracked mono. */
+html body :is(.activity-time,.af-library h3,.af-recent h3,.af-sec,.ao-band-copy .ao-band-eyebrow,.ao-command-head,.ao-empty h3,.ao-field .ao-reveal,.ao-field label,.ao-footer-rows,.ao-login-art-copy p,.ao-login-lockup span,.ao-login-title,.badge,.breadcrumb,.cat-label,.ch-cat .cat-label,.chip,.cmd-group-label,.cmd-item .ci-type,.comp-niche-cell .cat-label,.comp-niche-display.cat-label,.cos-field label,.cos-score span,.cos-stat span,.cos-table th,.donut .donut-val .dv-lbl,.drawer-body .d-row .k,.drawer-head .dh-kicker,.ev-tag,.eyebrow,.field label,.ip-faint,.ip-num,.ipl-cap,.kbd,.metric-hero .mh-cap,.mono,.nav-label,.num,.oh-kicker,.online-pill .label,.op-hero .oh-kicker,.period-chart-tip .pct-date,.period-chart-tip .rct-date,.pill,.rev-card .rc-label,.rev-chart-cap,.rev-chart-tip .rct-date,.rib-tip-time,.ribbon .rib-now::after,.ribbon-title,.sch-chart-cap,.sch-count-cap,.sch-kicker,.sch-next-cap,.section-kicker,.section-title,.splash-sub,.table th,.tour-kicker,.updated,/* every eyebrow,/* live status dot */
+.dot,[data-theme="operator"] .brand-name,[data-theme="operator"] .brand-sub,[data-theme="operator"] .breadcrumb,[data-theme="operator"] .ghost-link,[data-theme="operator"] .live-tag,[data-theme="operator"] .nav-label,[data-theme="operator"] .section-title,[data-theme="operator"] .sidebar .nav-item,[data-theme="operator"] .sidebar a,[data-theme="operator"] button.primary,[data-theme="operator"] th){letter-spacing:.04em!important;font-family:var(--font-ui)!important;font-weight:510}
+html body .factory-hero::after{border-color:rgba(208,214,224,.07)!important}
+html body .brand-filter button.active,html body .proof-filter.active{background:var(--color-paper);color:var(--color-void);border-color:var(--color-paper)}
+/* Inside Agent HQ (7 Oct 2026): HQ's own header, Refresh and theme already exist, so the console's top bar and its
+   marketing hero (whose counts read 0 while the library loads) are hidden; the tabs open straight onto the work. */
+html body.factory-page .topbar,html body.factory-page .factory-hero{display:none!important}

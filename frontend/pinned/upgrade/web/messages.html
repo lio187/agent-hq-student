@@ -1,0 +1,24 @@
+<!doctype html><html lang="en" data-theme="operator"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>External messages</title><style>
+*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink-body);font:13px/1.5 var(--font-ui);font-feature-settings:var(--font-features);-webkit-font-smoothing:antialiased}
+main{padding:24px 20px 40px;max-width:1240px;margin:auto}
+.embedded main{padding:4px 2px 24px;max-width:none}.embedded main>h1,.embedded main>h1+p{display:none}
+.layout{display:grid;grid-template-columns:minmax(300px,420px) minmax(0,1fr);gap:16px;align-items:start}@media(max-width:860px){.layout{grid-template-columns:1fr}}
+.layout>section{margin:0}.compose-card label:first-of-type{margin-top:12px}
+#records{display:grid}.record{display:grid;gap:3px;padding:10px 0;border-top:1px solid var(--line)}.record:first-child{border-top:0}.record strong{color:var(--ink);font-weight:510;overflow-wrap:anywhere}.record small{font-size:11px}.record span{color:var(--ink-muted);font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.empty-records{color:var(--ink-muted);padding:18px 0;margin:0}
+h1{font:590 20px/1.25 var(--font-ui);letter-spacing:-.012em;color:var(--ink);margin:4px 0 4px}
+h2{font:590 15px/1.3 var(--font-ui);letter-spacing:-.012em;color:var(--ink);margin:0}
+p{color:var(--ink-muted);margin:4px 0 16px}
+label{display:grid;gap:6px;margin:14px 0;font-size:12px;color:var(--ink-muted)}
+input,textarea,select{font:inherit;padding:8px 10px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(255,255,255,.02);color:var(--ink-body);width:100%}
+input:focus,textarea:focus,select:focus{outline:0;border-color:var(--ink-body)}
+textarea{min-height:120px;resize:vertical}
+button{font:510 13px/1 var(--font-ui);height:30px;padding:0 12px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--ink-body);cursor:pointer}
+button:hover{background:rgba(255,255,255,.05);border-color:var(--line-strong);color:var(--ink)}
+button:disabled{opacity:.45;cursor:default}
+button.primary{background:var(--ao-orange);color:#08090a;border-color:var(--ao-orange)}
+section{padding:16px 18px;border:1px solid var(--line);border-radius:12px;margin:18px 0;background:rgba(255,255,255,.02)}
+section>header,section>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:12px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.6 var(--font-mono);color:var(--ink-body)}
+small{color:var(--ink-muted)}[hidden]{display:none!important}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}</style></head><body><main><h1>External messages</h1><p>Read connected channel records and prepare a message. Sending requires a separate confirmation.</p><div class="layout"><section class="compose-card"><h2>Compose</h2><form id="compose"><label>Channel<select id="channel"><option value="telegram">Telegram Bot API</option><option value="whatsapp-local">Hermes WhatsApp · local</option></select></label><label>Recipient<input id="recipient" required maxlength="180" placeholder="Telegram chat ID or WhatsApp JID" autocomplete="off"></label><label>Message<textarea id="message" rows="7" required maxlength="4000"></textarea></label><button class="primary" id="prepare">Preview message</button></form><p id="status" role="status"></p><section id="review" hidden><h2>Review before sending</h2><p id="review-target"></p><pre id="review-text"></pre><small id="expiry"></small><div class="actions"><button id="confirm" class="primary" type="button">Confirm send</button><button id="discard" type="button">Discard preview</button></div></section></section><section class="records-card"><div class="actions"><h2>Channel records</h2><button id="refresh" type="button">Refresh</button></div><p id="source-status"></p><div id="records"></div></section></div></main><script src="messages.js"></script></body></html>

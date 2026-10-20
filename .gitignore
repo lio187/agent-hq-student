@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Generated build and release artifacts
+build/
+dist/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.mobileprovision
+
+# Runtime data and logs
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.log
+
+# macOS and editor metadata
+.DS_Store
+.idea/
+.vscode/
+*.xcuserstate
+xcuserdata/
+
+# Test output
+coverage/
+test-results/
+playwright-report/
+

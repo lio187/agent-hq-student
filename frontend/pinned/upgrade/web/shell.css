@@ -1,0 +1,414 @@
+/* Linear shell (4 October 2026): sidebar on the void, every page inside one inset carbon panel,
+   the Chief of Staff bar beneath it. This file owns shell layout; tokens live in tokens.css. */
+:root{--shell-gap:8px;--dock-height:52px}
+html,body{background:var(--bg-canvas)}
+body{font-family:var(--font-ui);font-feature-settings:var(--font-features);font-size:13px;line-height:1.5;color:var(--text-body);letter-spacing:var(--tracking-body);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+::selection{background:rgba(208,214,224,.24);color:var(--text-primary)}
+h1,h2,h3,h4{color:var(--text-primary);font-weight:var(--weight-strong);letter-spacing:var(--tracking-title)}
+h2{font-size:var(--text-title);line-height:1.25;margin:4px 0 16px}
+h3{font-size:15px;line-height:1.35}
+small{font-size:12px}
+a{color:var(--text-primary);text-decoration-color:var(--border-mid)}
+a:hover{color:var(--text-primary);text-decoration-color:var(--text-body)}
+kbd{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 4px;border-radius:var(--radius-badge);background:var(--bg-glass-3);box-shadow:inset 0 0 0 1px var(--border-soft);font:500 11px/1 var(--font-mono);color:var(--text-secondary);opacity:1;letter-spacing:0}
+.eyebrow{font:var(--weight-medium) 11px/1.4 var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:var(--text-tertiary)}
+.muted{color:var(--text-secondary);font-size:13px}
+.ui-icon{display:block;flex:none}
+
+/* Controls — document scope */
+button{font:var(--weight-medium) 13px/1.2 var(--font-ui);letter-spacing:var(--tracking-body);color:var(--text-body);background:transparent;border:1px solid var(--border-soft);border-radius:var(--radius-control);padding:7px 12px;transition:background .15s var(--ease),border-color .15s var(--ease),color .15s var(--ease)}
+button:hover{background:var(--bg-hover);border-color:var(--border-mid);color:var(--text-primary)}
+button.active,button[aria-pressed=true]{background:var(--bg-active);border-color:var(--border-mid);color:var(--text-primary)}
+button.primary,.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:var(--weight-medium);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 1px rgba(0,0,0,.08)}
+button.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);color:var(--accent-ink)}
+button:disabled,button.primary:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,summary:focus-visible,a:focus-visible,[tabindex]:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:0;box-shadow:var(--focus-ring)}
+input,select,textarea{font:400 13px/1.4 var(--font-ui);color:var(--text-body);background:var(--bg-glass-1);border:1px solid var(--border-input);border-radius:var(--radius-control);padding:7px 10px;transition:border-color .15s var(--ease)}
+input::placeholder,textarea::placeholder{color:var(--text-tertiary)}
+input:hover,select:hover,textarea:hover{border-color:var(--border-mid)}
+input:focus,select:focus,textarea:focus{border-color:var(--text-body);outline:0}
+select{appearance:none;padding-right:26px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%238a8f98' stroke-width='1.4'%3E%3Cpath d='m1 1 4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center}
+select option{background:var(--bg-elevated);color:var(--text-body)}
+
+/* Sidebar */
+#hq-nav.hq-sidebar{position:fixed;z-index:90;inset:0 auto 0 0;width:var(--sidebar-width);display:flex;flex-direction:column;gap:1px;padding:10px 10px 10px 12px;background:var(--bg-canvas);border:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+#hq-nav.hq-sidebar::-webkit-scrollbar{display:none}
+.hq-sidebar button{font:inherit}
+.sb-head{display:flex;align-items:center;height:48px;padding:0 4px;margin-bottom:6px}
+.sb-brand{display:flex;align-items:center;gap:10px;color:var(--text-primary);text-decoration:none;border-radius:var(--radius-control);padding:4px 6px 4px 2px}
+.sb-brand:hover{background:var(--bg-hover)}
+.sb-wordmark{display:grid;gap:3px}
+.sb-wordmark b{font:var(--weight-strong) 15px/1 var(--font-ui);letter-spacing:-.01em;color:var(--text-primary)}
+.sb-wordmark small{font:var(--weight-medium) 11px/1 var(--font-ui);color:var(--text-tertiary);letter-spacing:.01em}
+/* The real 187N infinity, lifted to brushed chrome so it reads on the void; the green core stays. */
+.sb-brand img{width:46px;height:24px;object-fit:contain;filter:brightness(2.4) contrast(1.15)}
+.sb-business{display:block;margin:0 0 6px}
+.sb-business select{width:100%;height:30px;padding:0 26px 0 9px;font-weight:var(--weight-medium);color:var(--text-body);background-color:transparent;border-color:var(--border-soft)}
+.sb-search{display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 8px;margin:0 0 10px;color:var(--text-tertiary);background:var(--bg-glass-2);border:1px solid var(--border-soft);border-radius:var(--radius-control);font-weight:400;text-align:left}
+.sb-search span{flex:1}
+.sb-search:hover{color:var(--text-body);background:var(--bg-glass-3)}
+.sb-item{position:relative;display:flex;align-items:center;gap:9px;width:100%;min-height:30px;padding:0 8px;border:0!important;border-radius:var(--radius-control);background:transparent;color:var(--text-body);font:var(--weight-medium) 13px/1.2 var(--font-ui);text-align:left;white-space:nowrap}
+.sb-item span{flex:1;overflow:hidden;text-overflow:ellipsis}
+.sb-item .ui-icon{color:var(--text-tertiary)}
+.sb-item:hover{background:var(--bg-hover);color:var(--text-primary)}
+.sb-item:hover .ui-icon{color:var(--text-secondary)}
+.sb-item[aria-current=page]{background:var(--bg-active);color:var(--text-primary)}
+.sb-item[aria-current=page] .ui-icon{color:var(--text-primary)}
+.sb-item[aria-current=page]::before{content:'';position:absolute;left:-6px;top:8px;bottom:8px;width:2px;border-radius:2px;background:var(--accent)}
+.sb-primary{display:grid;gap:1px;margin-bottom:6px}
+.sb-count{margin-left:auto;min-width:18px;height:18px;display:grid;place-items:center;padding:0 5px;border-radius:var(--radius-pill);background:var(--bg-glass-3);color:var(--text-primary);font:var(--weight-medium) 11px/1 var(--font-ui)}
+.sb-count[hidden]{display:none}
+.sb-label{padding:14px 8px 5px;font:var(--weight-medium) 11px/1 var(--font-ui);color:var(--text-tertiary);letter-spacing:.02em}
+.sb-groups{display:grid;gap:1px}
+.sb-group-toggle{display:flex;align-items:center;gap:9px;width:100%;min-height:30px;padding:0 8px;border:0!important;border-radius:var(--radius-control);background:transparent;color:var(--text-body);font:var(--weight-medium) 13px/1.2 var(--font-ui);text-align:left}
+.sb-group-toggle span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-group-toggle .ui-icon:first-child{color:var(--text-tertiary)}
+.sb-group-toggle .ui-icon:last-child{width:12px;height:12px;color:var(--text-tertiary);transform:rotate(90deg);transition:transform .15s var(--ease);opacity:0}
+.sb-group-toggle:hover{background:var(--bg-hover);color:var(--text-primary)}
+.sb-group-toggle:hover .ui-icon:last-child,.sb-group[data-collapsed] .sb-group-toggle .ui-icon:last-child{opacity:1}
+.sb-group[data-collapsed] .sb-group-toggle .ui-icon:last-child{transform:none}
+.sb-group.has-current>.sb-group-toggle{color:var(--text-primary)}
+.sb-group.has-current>.sb-group-toggle .ui-icon:first-child{color:var(--text-body)}
+.sb-group-items{display:grid;gap:1px;padding:1px 0 4px 17px;margin-left:8px;border-left:1px solid var(--border-soft)}
+.sb-group[data-collapsed] .sb-group-items{display:none}
+.sb-group-items .sb-item{min-height:28px;padding-left:10px;color:var(--text-secondary);font-weight:400}
+.sb-group-items .sb-item:hover{color:var(--text-primary)}
+.sb-group-items .sb-item[aria-current=page]{color:var(--text-primary);font-weight:var(--weight-medium)}
+.sb-group-items .sb-item[aria-current=page]::before{left:-18px}
+.sb-usage{position:static!important;display:grid;gap:1px;margin:auto 0 0;padding:10px 0 6px;border-top:1px solid var(--border-soft);background:transparent;height:auto;width:auto}
+.sb-usage .sb-label{padding:0 8px 6px}.sb-usage .sb-label~.sb-label{padding-top:10px}.sb-usage button[data-meter=revenue][data-state=stale] small{color:var(--status-warn)}
+.sb-usage button{display:grid;grid-template-columns:20px minmax(0,1fr) auto;align-items:center;gap:8px;width:100%;min-height:28px;padding:0 8px;border:0;border-radius:var(--radius-control);background:transparent;text-align:left;font:400 12px/1.2 var(--font-ui);color:var(--text-secondary)}
+.sb-usage button:hover{background:var(--bg-hover);color:var(--text-primary)}
+.sb-usage .engine-symbol{display:flex}
+.sb-usage .engine-logo{width:18px;height:18px;border-radius:5px;object-fit:contain}
+.sb-usage button[data-meter=revenue]{grid-template-columns:minmax(0,1fr) auto;padding-left:36px}
+.sb-usage .strip-label{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-usage .strip-label small{display:none}
+/* The revenue figure is a dated snapshot: its date stays on screen (7 Oct 2026). */
+.sb-usage button[data-meter=revenue] .strip-label small{display:block;margin-top:2px;font-size:11px;line-height:1.2;color:var(--text-tertiary)}
+.sb-usage button[data-meter=revenue][data-state=stale] .strip-label small{color:var(--status-warn)}
+.sb-usage button[data-meter=revenue]{padding-left:8px}
+.sb-usage b{font:var(--weight-medium) 12px/1 var(--font-ui);color:var(--text-primary);font-variant-numeric:tabular-nums}
+.sb-usage button[data-state=unavailable] b,.sb-usage button[data-state=error] b{color:var(--text-tertiary)}
+.sb-usage .strip-status{display:flex;align-items:center;gap:7px;padding:6px 8px 0;font-size:11px;color:var(--text-tertiary)}
+.sb-usage .strip-status i{width:6px;height:6px;border-radius:50%;background:var(--status-live)}.sb-usage .strip-status[data-state=unavailable] i{background:var(--status-error)}
+.sb-foot{display:grid;gap:1px;padding-top:6px;border-top:1px solid var(--border-soft)}
+.sb-usage+.sb-foot{border-top:0;padding-top:0}
+.sb-foot kbd{margin-left:auto}
+.sb-health{width:7px;height:7px;margin-left:auto;border-radius:50%;background:var(--text-tertiary)}
+.sb-health[data-state=ok]{background:var(--status-live)}
+.sb-health[data-state=warn]{background:var(--status-warn)}
+.sb-health[data-state=error]{background:var(--status-error);box-shadow:0 0 0 3px var(--status-error-wash)}
+body.hide-cockpit-numbers .sb-usage b{filter:blur(6px)}
+
+/* Top bar (office route) */
+body.cockpit-ready>header{position:fixed;z-index:20;top:var(--shell-gap);left:var(--sidebar-width);right:var(--shell-gap);height:var(--topbar-height);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;padding:0 10px 0 16px;margin:0;background:var(--bg-panel);border:1px solid var(--border-soft);border-bottom-color:var(--border-soft);border-radius:var(--radius-card) var(--radius-card) 0 0;grid-template-columns:none}
+#sidebar-toggle{display:none;width:30px;height:30px;padding:0;place-items:center;border-color:transparent;color:var(--text-secondary)}
+.topbar-title{display:flex;align-items:center;gap:8px;min-width:0;font:var(--weight-medium) 13px/1 var(--font-ui);white-space:nowrap}
+.topbar-crumb{color:var(--text-tertiary)}
+.topbar-sep{color:var(--text-tertiary);opacity:.6}
+.topbar-page{color:var(--text-primary)}
+body.cockpit-ready>header #connector-strip{grid-column:2;max-width:min(760px,52vw);min-width:0;height:auto;display:flex;align-items:center;justify-content:center;gap:2px;padding:0;margin:0;background:transparent;border:0;overflow-x:auto;scrollbar-width:none}
+body.cockpit-ready>header #connector-strip button{padding:4px;border:0;border-radius:var(--radius-control);background:transparent;min-width:26px;min-height:26px}
+body.cockpit-ready>header #connector-strip button:hover{background:var(--bg-hover)}
+body.cockpit-ready>header #connector-strip .connector-logo,body.cockpit-ready>header #connector-strip .connector-monogram{width:18px;height:18px;border-radius:4px}
+body.cockpit-ready>header nav{grid-column:3;justify-self:end;display:flex;align-items:center;gap:6px;margin:0;flex:none}
+body.cockpit-ready>header .topbar-title{grid-column:1}
+body.cockpit-ready>header #sidebar-toggle{grid-column:1;grid-row:1}
+body.cockpit-ready>header nav>button{height:30px;padding:0 10px;font-size:13px}
+#office-menu summary{display:grid;place-items:center;width:30px;height:30px;padding:0;border-radius:var(--radius-control);color:var(--text-secondary)}
+#office-menu summary:hover{background:var(--bg-hover);color:var(--text-primary)}
+#office-menu-content{top:36px;right:0;width:260px;padding:8px;display:grid;gap:4px;background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:var(--radius-card);box-shadow:var(--shadow-pop);color:var(--text-body)}
+#office-menu-content button{width:100%;justify-content:flex-start;text-align:left;border-color:transparent;font-weight:400}
+#office-menu-content button:hover{background:var(--bg-hover)}
+#office-menu-content .project-control{display:grid;gap:5px;font-size:12px;color:var(--text-secondary);padding:4px 6px 8px;border-bottom:1px solid var(--border-soft);margin-bottom:4px}
+#office-menu-content #connection{font:500 11px/1.3 var(--font-mono);color:var(--text-tertiary);padding:4px 8px;letter-spacing:0}
+#utility-actions{display:grid;gap:2px;border-top:1px solid var(--border-soft);padding-top:4px;margin-top:4px}
+#utility-actions button{display:flex;align-items:center;gap:8px}
+#utility-actions #event-status,#utility-actions #runtime-activity{font:400 11px/1.3 var(--font-mono);color:var(--text-tertiary);padding:4px 8px}
+#approval-count,#question-count,#model-count{font:var(--weight-medium) 11px/1 var(--font-ui);color:var(--text-secondary);margin-left:auto}
+
+/* Office route: the canvas and its inspector share one panel with the top bar */
+body.cockpit-ready>main,body.cockpit-ready.has-rail>main{position:fixed;top:calc(var(--shell-gap) + var(--topbar-height));left:var(--sidebar-width);right:var(--shell-gap);bottom:calc(var(--dock-height) + var(--shell-gap)*2);height:auto;min-height:0;margin:0;display:grid;grid-template-columns:minmax(0,1fr) var(--inspector-width);grid-template-rows:minmax(0,1fr);background:var(--bg-panel);border:1px solid var(--border-soft);border-top:0;border-radius:0 0 var(--radius-card) var(--radius-card);overflow:hidden}
+body.cockpit-ready #office{grid-column:1;grid-row:1;min-height:0;background:radial-gradient(120% 90% at 50% 30%,#131416 0%,#0d0e0f 55%,#0a0b0c 100%)}
+body.cockpit-ready #panel{grid-column:2;grid-row:1;margin:0;border:0;border-left:1px solid var(--border-soft);border-radius:0;background:var(--bg-panel);color:var(--text-body);min-height:0;display:flex;flex-direction:column;overflow:hidden}
+body.cockpit-ready #engine-rail{display:none!important}
+@media(min-width:1101px){
+ body.cockpit-ready.has-rail>main{grid-template-columns:320px minmax(0,1fr) var(--inspector-width)}
+ body.cockpit-ready.has-rail #agent-rail{position:relative;grid-column:1;grid-row:1;inset:auto;width:auto;margin:0;border:0;border-right:1px solid var(--border-soft);border-radius:0;background:var(--bg-panel)}
+ body.cockpit-ready.has-rail #office{grid-column:2}
+ body.cockpit-ready.has-rail #panel{grid-column:3}
+}
+body.cinematic.cockpit-ready>main{grid-template-columns:minmax(0,1fr)}
+body.cinematic.cockpit-ready #panel{display:none}
+
+/* Office overlays */
+#office .scene-title{top:18px;left:20px}
+#office .scene-title .eyebrow{font-size:11px;color:var(--text-tertiary)}
+#office .scene-title h1{font:var(--weight-strong) 20px/1.2 var(--font-ui);letter-spacing:var(--tracking-title);color:var(--text-primary);margin:6px 0 4px}
+#office .scene-title p{font-size:12px;color:var(--text-secondary);margin:0}
+#department-nav{gap:4px}
+#department-nav button{height:26px;padding:0 8px;font-size:12px;font-weight:400;color:var(--text-secondary);background:rgba(15,16,17,.86);border:1px solid var(--border-soft);border-radius:var(--radius-control);backdrop-filter:blur(8px)}
+#department-nav button kbd{min-width:16px;height:16px;margin-right:5px;font-size:10px}
+#department-nav button:hover,#department-nav button.active{color:var(--text-primary);border-color:var(--border-mid)}
+#camera{gap:4px}
+#camera button{height:28px;min-width:28px;padding:0 9px;font-size:12px;font-weight:400;color:var(--text-secondary);background:rgba(15,16,17,.86);border:1px solid var(--border-soft);border-radius:var(--radius-control);backdrop-filter:blur(8px)}
+#camera button:hover{color:var(--text-primary)}
+#office .scene-note{font-size:11px;color:var(--text-tertiary)}
+#office .live-dot{background:var(--status-live)}
+.label-lines line{stroke:var(--text-tertiary);opacity:.35}
+.renderer-notice{background:var(--bg-elevated);border-color:var(--border-soft);border-radius:var(--radius-card);color:var(--text-body)}
+
+/* Department cards floating over the 3D floor */
+.dept-label,.dark .dept-label{width:168px;padding:10px 12px;background:rgba(15,16,17,.9);color:var(--text-body);border:1px solid var(--border-soft);border-radius:var(--radius-card);box-shadow:0 8px 24px rgba(0,0,0,.35);backdrop-filter:blur(10px);font-family:var(--font-ui);text-align:left;transition:border-color .15s var(--ease),transform .15s var(--ease)}
+.dept-label:hover,.dark .dept-label:hover{border-color:var(--border-mid)}
+.dept-label .pod-title,.dark .pod-title{font:var(--weight-medium) 11px/1.3 var(--font-ui);letter-spacing:.02em;color:var(--text-body);text-transform:none}
+.dept-label .pod-title i{width:6px;height:6px;flex:none;border-radius:50%;background:var(--text-tertiary)}
+.dept-label[data-department=growth] .pod-title i{background:#c98e74}.dept-label[data-department=ecom] .pod-title i{background:#c98e74}.dept-label[data-department=content] .pod-title i{background:#95ad8e}.dept-label[data-department=outreach] .pod-title i{background:#95ad8e}.dept-label[data-department=revenue] .pod-title i{background:#c8b36d}.dept-label[data-department=operations] .pod-title i{background:#ac99ba}.dept-label[data-department=build] .pod-title i{background:#81a8b2}.dept-label[data-department=finance] .pod-title i{background:#9999b8}.dept-label[data-department=command] .pod-title i{background:#ef6b34}
+.dept-label .pod-count,.dark .pod-count{font:var(--weight-strong) 22px/1 var(--font-ui);letter-spacing:var(--tracking-tight);color:var(--text-primary)}
+.dept-label .pod-count small,.dark .pod-count small{font:400 9px/1.2 var(--font-ui);letter-spacing:.04em;color:var(--text-tertiary)}
+.dept-label .pod-stats,.dark .pod-stats{font:400 10px/1.4 var(--font-ui);color:var(--text-secondary);letter-spacing:0}
+.dept-label .pod-stats b,.dark .pod-stats b{color:var(--text-primary);font-weight:var(--weight-medium)}
+.dept-label .pod-alert,.dark .pod-alert{font:400 10px/1.4 var(--font-ui);color:var(--status-error)}
+.agent-label{font:var(--weight-medium) 10px/1.2 var(--font-ui);color:var(--text-body);background:rgba(15,16,17,.92);border:1px solid var(--border-soft);border-radius:var(--radius-control);box-shadow:none}
+.agent-label[data-agent=chief],.agent-label.work-inspected{border-color:var(--border-mid)}
+.command-sign{font:var(--weight-medium) 10px/1 var(--font-ui);letter-spacing:.04em;background:var(--bg-elevated);color:var(--text-primary);border:1px solid var(--border-soft);border-radius:var(--radius-control)}
+#connector-wires path{stroke:var(--text-tertiary)}
+#connector-wires .connector-live,#connector-wires path.work-link{stroke:var(--accent)}
+#connector-wires .connector-trace{fill:var(--text-body)}
+#connector-wires .connector-trace-live{fill:var(--accent)}
+
+/* Inspector */
+#panel .quick-composer{margin:12px;padding:10px 12px;border:1px solid var(--border-soft);border-radius:var(--radius-card);background:var(--bg-glass-1);box-shadow:none}
+#panel .quick-composer:focus-within{border-color:var(--border-mid)}
+#panel .quick-composer textarea{background:transparent;border:0;padding:4px 0;font-size:13px;color:var(--text-primary);box-shadow:none}
+#panel .quick-top select{height:26px;font-size:11px;font-weight:var(--weight-medium);text-transform:none;letter-spacing:0;background-color:transparent;border-color:transparent;padding-left:4px}
+#panel .quick-bottom button{height:26px;padding:0 9px;font-size:12px}
+#panel .quick-bottom .primary{padding:0 12px}
+#panel .tabs{display:flex;gap:2px;padding:0 12px;border-bottom:1px solid var(--border-soft);justify-content:flex-start}
+#panel .tabs button{border:0;border-radius:0;background:transparent;padding:10px 8px;font-size:13px;font-weight:var(--weight-medium);color:var(--text-secondary);box-shadow:none;position:relative}
+#panel .tabs button:hover{color:var(--text-primary)}
+#panel .tabs button.active{color:var(--text-primary)}
+#panel .tabs button.active::after{content:'';position:absolute;left:8px;right:8px;bottom:-1px;height:2px;border-radius:2px;background:var(--text-primary)}
+#feed-controls{padding:10px 12px 0}
+#feed-search{height:30px;border-radius:var(--radius-control)!important;font-size:13px!important}
+#panel-content{padding:12px 14px 20px;scrollbar-width:thin;scrollbar-color:var(--border-soft) transparent}
+#panel h2,.feed-summary h2{font:var(--weight-strong) 15px/1.3 var(--font-ui);letter-spacing:var(--tracking-title);color:var(--text-primary)}
+.feed-summary{background:var(--bg-panel)}
+.work-completion{background:var(--bg-glass-1);border:1px solid var(--border-soft);border-radius:var(--radius-card);color:var(--text-body)}
+.work-completion b{font:var(--weight-strong) 22px/1 var(--font-ui);letter-spacing:var(--tracking-tight);color:var(--text-primary)}
+.completion-meter{height:4px;background:var(--bg-glass-3)}
+.completion-meter i{background:var(--text-body)!important}
+.status-chips button,.status-chips span{border-radius:var(--radius-pill);font-size:11px;font-weight:var(--weight-medium);color:var(--text-secondary);background:var(--bg-glass-2);border:1px solid transparent}
+.status-chips button.active,.status-chips button[aria-pressed=true]{color:var(--text-primary);background:var(--bg-active);border-color:var(--border-mid)}
+.status-chips b{color:var(--text-primary);font-weight:var(--weight-medium)}
+.card,.task-card{background:var(--bg-glass-1);border:1px solid var(--border-soft);border-radius:var(--radius-card);color:var(--text-body);box-shadow:none}
+.task-feed .task-card:hover{background:var(--bg-glass-2);border-color:var(--border-mid)}
+.task-card h3,.task-card .task-open{font:var(--weight-medium) 13px/1.4 var(--font-ui);color:var(--text-primary);letter-spacing:var(--tracking-body)}
+.status{display:inline-flex;align-items:center;gap:5px;font:var(--weight-medium) 11px/1 var(--font-ui);letter-spacing:.01em;color:var(--text-secondary);background:var(--bg-glass-3);border:0;border-radius:var(--radius-badge);padding:4px 6px;text-transform:none}
+.status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--text-tertiary)}
+.status.running::before,.status.working::before{background:var(--status-info)}
+.status.completed::before,.status.done::before{background:var(--status-live)}
+.status.blocked::before,.status.failed::before{background:var(--status-error)}
+.status.waiting_for_approval::before,.status.waiting_for_input::before,.status.waiting::before{background:var(--status-warn)}
+.status.scheduled::before,.status.paused::before{background:var(--status-pending)}
+.progress-segments i{background:var(--bg-glass-3)}
+.progress-segments i.done{background:var(--text-body)}
+.work-progress[data-progress-state=running] .progress-segments .current{background:var(--status-info)}
+
+/* Workspace panel */
+#cockpit-panel{position:fixed;z-index:65;top:var(--shell-gap);left:var(--sidebar-width);right:var(--shell-gap);bottom:calc(var(--dock-height) + var(--shell-gap)*2);background:var(--bg-panel);color:var(--text-body);border:1px solid var(--border-soft);border-radius:var(--radius-card);overflow:hidden}
+#cockpit-panel[hidden]{display:none}
+
+/* Chief of Staff bar */
+#chief-dock{position:fixed;z-index:80;left:var(--sidebar-width);right:var(--shell-gap);bottom:var(--shell-gap);height:var(--dock-height);display:flex;align-items:center;gap:8px;padding:0 8px 0 10px;background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-card)}
+#chief-dock .chief-identity{display:flex;align-items:center;gap:10px;min-width:0;flex:none;padding-right:6px}
+#chief-dock .chief-identity>span{display:grid;gap:2px}
+#chief-dock .chief-identity strong{font:var(--weight-medium) 13px/1.2 var(--font-ui);color:var(--text-primary)}
+#chief-dock .chief-identity small{font-size:11px;color:var(--text-tertiary);max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chief-orb{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:var(--bg-glass-3);box-shadow:inset 0 0 0 1px var(--border-soft);color:var(--text-primary);font:400 16px/1 var(--font-ui);font-style:normal}
+#chief-dock .chief-field{position:relative;flex:1;min-width:120px;display:flex;align-items:center}
+#chief-dock .chief-input{width:100%;height:34px;padding:0 44px 0 12px;border-radius:var(--radius-control);background:var(--bg-glass-1);border:1px solid var(--border-input);font-size:13px;color:var(--text-primary)}
+#chief-dock .chief-input:focus{border-color:var(--text-body)}
+#chief-dock .chief-field kbd{position:absolute;right:8px;pointer-events:none}
+#chief-dock .chief-input:focus+kbd{display:none}
+#chief-dock .chief-send{height:30px;padding:0 14px;border-radius:var(--radius-pill);background:var(--color-paper);border-color:var(--color-paper);color:var(--accent-ink);font-weight:var(--weight-medium)}
+#chief-dock .chief-send:hover{background:var(--color-bone);border-color:var(--color-bone);color:var(--accent-ink)}
+#chief-dock .chief-talk{display:flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:var(--radius-pill);background:transparent;border-color:var(--border-soft);color:var(--text-body);font-weight:var(--weight-medium);font-size:13px}
+#chief-dock .chief-talk:hover{background:var(--bg-hover);color:var(--text-primary)}
+#chief-dock .dock-more{position:relative;margin-left:4px;padding-left:8px;border-left:1px solid var(--border-soft)}
+#chief-dock .dock-more summary{list-style:none;display:grid;place-items:center;width:32px;height:28px;border-radius:var(--radius-control);color:var(--text-secondary);cursor:pointer;letter-spacing:.1em}
+#chief-dock .dock-more summary::-webkit-details-marker{display:none}
+#chief-dock .dock-more summary:hover,#chief-dock .dock-more[open] summary{color:var(--text-primary);background:var(--bg-hover)}
+#chief-dock .dock-more summary:focus-visible{outline:2px solid rgba(208,214,224,.55);outline-offset:1px}
+#chief-dock .dock-tools{position:absolute;right:0;bottom:calc(100% + 8px);display:flex;flex-direction:column;gap:2px;min-width:170px;padding:6px;border:1px solid var(--border-soft);border-radius:10px;background:var(--bg-elevated);box-shadow:var(--shadow-xl)}
+#chief-dock .dock-tools button{justify-content:flex-start;text-align:left}
+#chief-dock .dock-tools button{height:28px;padding:0 9px;font-size:12px;font-weight:400;border-color:transparent;color:var(--text-secondary);border-radius:var(--radius-control)}
+#chief-dock .dock-tools button:hover{color:var(--text-primary);background:var(--bg-hover)}
+#chief-dock .dock-tools button[aria-pressed=true]{color:var(--text-primary);background:var(--bg-active);border-color:var(--border-mid)}
+
+/* Notifications, toast, voice */
+#hq-notifications{position:fixed;z-index:120;right:calc(var(--shell-gap) + 8px);bottom:calc(var(--dock-height) + var(--shell-gap)*2 + 8px);display:grid;gap:6px;width:min(340px,calc(100vw - 32px));pointer-events:none}
+#hq-notifications button{pointer-events:auto;display:block;text-align:left;padding:12px 14px;background:var(--bg-elevated);color:var(--text-body);border:1px solid var(--border-soft);border-radius:var(--radius-card);box-shadow:var(--shadow-pop);animation:notice-in .18s var(--ease)}
+#hq-notifications strong{display:block;font:var(--weight-medium) 13px/1.3 var(--font-ui);color:var(--text-primary);margin-bottom:3px}
+#hq-notifications small{display:block;font-size:12px;color:var(--text-secondary)}
+#toast{left:50%;right:auto;bottom:calc(var(--dock-height) + var(--shell-gap)*2 + 12px);transform:translateX(-50%);max-width:min(520px,calc(100vw - 32px));padding:10px 14px;background:var(--bg-elevated);color:var(--text-primary);border:1px solid var(--border-soft);border-radius:var(--radius-control);box-shadow:var(--shadow-pop);font-size:13px}
+#voice-session{background:var(--bg-elevated)!important;border:1px solid var(--border-soft);border-radius:var(--radius-card);box-shadow:var(--shadow-pop);color:var(--text-body)!important;bottom:calc(var(--dock-height) + var(--shell-gap)*2 + 8px)!important}
+
+/* Dialogs */
+dialog{padding:20px 22px;background:var(--bg-elevated);color:var(--text-body);border:1px solid var(--border-soft);border-radius:var(--radius-card);box-shadow:var(--shadow-xl),0 0 0 1px rgba(0,0,0,.4);color-scheme:dark}
+dialog::backdrop{background:rgba(8,9,10,.72);backdrop-filter:blur(2px)}
+dialog h2{font:var(--weight-strong) 18px/1.3 var(--font-ui);letter-spacing:var(--tracking-title);margin:2px 0 14px}
+.dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.dialog-head button[data-close],dialog [data-close]{width:28px;height:28px;padding:0;display:grid;place-items:center;font-size:16px;border-color:transparent;color:var(--text-secondary)}
+dialog label{display:grid;gap:6px;font-size:12px;color:var(--text-secondary)}
+dialog .actions{display:flex;justify-content:flex-end;gap:8px}
+dialog details summary{color:var(--text-secondary);font-size:12px;cursor:pointer}
+#company,#brain-view{background:var(--bg-panel)}
+
+/* Command palette */
+#command-palette{width:min(640px,calc(100vw - 32px));max-height:min(560px,80dvh);padding:0;margin:12vh auto auto;display:none;flex-direction:column;overflow:hidden;background:var(--bg-elevated);border-color:var(--border-mid)}
+#command-palette[open]{display:flex}
+.cp-input{flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;height:52px;border-bottom:1px solid var(--border-soft);color:var(--text-tertiary)}
+.cp-chip{flex:none;display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:var(--radius-badge);background:var(--bg-glass-3,rgba(255,255,255,.06));box-shadow:inset 0 0 0 1px var(--border-mid);font:var(--weight-medium) 12px/1 var(--font-ui);color:var(--text-primary);white-space:nowrap}
+.cp-input input{flex:1;height:100%;padding:0;border:0;background:transparent;font-size:15px;color:var(--text-primary);box-shadow:none}
+.cp-input input:focus{box-shadow:none}
+.cp-list{flex:1;overflow-y:auto;padding:6px;scrollbar-width:thin;scrollbar-color:var(--border-soft) transparent}
+.cp-group{padding:10px 10px 4px;font:var(--weight-medium) 11px/1 var(--font-ui);color:var(--text-tertiary);letter-spacing:.02em}
+.cp-item{display:flex;align-items:center;gap:10px;width:100%;min-height:36px;padding:0 10px;border:0;border-radius:var(--radius-control);background:transparent;color:var(--text-body);font-weight:400;text-align:left}
+.cp-item .ui-icon{color:var(--text-tertiary)}
+.cp-item[aria-selected=true]{background:var(--bg-active);color:var(--text-primary)}
+.cp-item[aria-selected=true] .ui-icon{color:var(--text-primary)}
+.cp-title{flex:none;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:var(--weight-medium)}
+.cp-hint{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-tertiary);font-size:12px;text-align:right}
+.cp-empty{padding:28px 12px;text-align:center;color:var(--text-tertiary)}
+.cp-shortcut{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:var(--radius-control);color:var(--text-body)}
+.cp-shortcut:hover{background:var(--bg-hover)}
+.cp-foot{flex:none;display:flex;gap:16px;padding:9px 14px;border-top:1px solid var(--border-soft);font-size:11px;color:var(--text-tertiary)}
+.cp-foot kbd{margin-right:3px}
+
+/* Demo and recording keep their existing behaviour */
+body.hq-demo #hq-nav,body.hq-recording #hq-nav{opacity:.45;pointer-events:none}
+#demo-story,#mission-control-dock.legacy{background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:var(--radius-card);color:var(--text-body)}
+#demo-banner .demo-label{background:var(--bg-active);color:var(--text-primary);border:1px solid var(--border-mid);font-weight:var(--weight-medium);letter-spacing:.08em}
+#demo-progress i.done{background:var(--text-body)}
+#demo-caption{background:rgba(15,16,17,.92);color:var(--text-primary);border:1px solid var(--border-soft)}
+#recording-guide{border-color:rgba(208,214,224,.35)}
+
+/* Narrow screens: sidebar becomes a sheet; the panel fills the width */
+@media(max-width:900px){
+ :root{--sidebar-width:var(--shell-gap)}
+ #hq-nav.hq-sidebar{width:272px;transform:translateX(-100%);transition:transform .2s var(--ease);box-shadow:var(--shadow-xl);border-right:1px solid var(--border-soft)}
+ body.sidebar-open #hq-nav.hq-sidebar{transform:none}
+ body.sidebar-open::after{content:'';position:fixed;inset:0;z-index:85;background:rgba(8,9,10,.6)}
+ #sidebar-toggle{display:grid}
+ body.cockpit-ready>header{display:flex}
+ body.cockpit-ready>header #connector-strip{flex:1;max-width:none}
+ body.workspace-open #sidebar-toggle{display:none}
+ body.cockpit-ready>main,body.cockpit-ready.has-rail>main{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1.15fr) minmax(0,1fr)}
+ body.cockpit-ready #office{grid-column:1;grid-row:1}
+ body.cockpit-ready #panel,body.cockpit-ready.has-rail #panel{grid-column:1;grid-row:2;border-left:0;border-top:1px solid var(--border-soft)}
+ body.cockpit-ready.has-rail #agent-rail{position:absolute;z-index:12;inset:8px 8px auto 8px;max-height:60%;border:1px solid var(--border-soft);border-radius:var(--radius-card);background:var(--bg-elevated)}
+ body.cockpit-ready>header nav>#company-open,body.cockpit-ready>header nav>#home{display:none}
+ #chief-dock .chief-identity,#chief-dock .dock-more{display:none}
+ /* Phone office: keep the floor readable; departments stay reachable by tapping their cards. */
+ #department-nav,#office .scene-note,#office .scene-title p,#office .scene-title .eyebrow{display:none!important}
+ #office .scene-title{top:12px;left:12px}
+ #office .scene-title h1{font-size:16px;margin:0}
+ #camera,#tool-links{display:none!important}
+ #chief-dock .chief-field kbd{display:none}
+}
+@media(max-width:520px){
+ :root{--dock-height:48px;--topbar-height:44px}
+ #chief-dock .chief-talk span{display:none}
+ body.cockpit-ready>header #connector-strip{display:none}
+ body.cockpit-ready>header nav{margin-left:auto}
+}
+@media(prefers-reduced-motion:reduce){#hq-nav.hq-sidebar{transition:none}#hq-notifications button{animation:none}}
+
+/* Consistency pass: office secondary surfaces. */
+.status{white-space:nowrap;flex:none}
+.board-label{font:var(--weight-medium) 11px/1.2 var(--font-ui);letter-spacing:.04em;color:var(--text-tertiary);background:var(--bg-panel)}
+.board-label b{color:var(--text-primary);font-weight:var(--weight-medium)}
+.board-cell{border-color:var(--border-soft);min-height:150px;scrollbar-width:thin;scrollbar-color:var(--border-soft) transparent}
+/* Board cards are compact summaries; open a card for progress and steps. */
+.board-cell .task-card{padding:10px 12px}
+.board-cell .task-card .work-progress,.board-cell .task-card .task-progress-toggle,.board-cell .task-card .task-steps,.board-cell .task-card .task-track{display:none}
+.board-cell .task-card h3{font-size:13px;margin:6px 0 4px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.board-department{border-color:var(--border-soft)}
+#camera button{white-space:nowrap}
+body.has-rail #department-nav{display:none}
+/* Agent rail: the conversation keeps room to read; the rail scrolls when space is short. */
+body.cockpit-ready #agent-rail{overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border-soft) transparent}
+#agent-rail #chat{min-height:min(560px,70vh)}
+#agent-rail #messages{min-height:140px}
+#rail-header .rail-roster button,#rail-header .agent-row{font-size:11px}
+/* One lime per view: secondary sends use the neutral high-contrast pill. */
+#chat-form .primary,#agent-greeting .primary,.greeting-actions .primary{background:var(--color-paper);border-color:var(--color-paper);color:var(--accent-ink);box-shadow:none}
+#chat-form .primary:hover,#agent-greeting .primary:hover{background:var(--color-bone);border-color:var(--color-bone)}
+#agent-greeting{background:rgba(15,16,17,.94);border:1px solid var(--border-soft);border-radius:var(--radius-card);box-shadow:0 8px 24px rgba(0,0,0,.35);backdrop-filter:blur(10px)}
+.health-grid{display:grid;grid-template-columns:minmax(140px,max-content) minmax(0,1fr);gap:8px 18px;margin:4px 0 16px;font-size:13px}
+.health-grid dt{color:var(--text-secondary)}
+.health-grid dd{margin:0;color:var(--text-primary)}
+#office-menu-content select{width:100%;height:30px;padding:0 26px 0 9px;border:1px solid var(--border-input);background-color:var(--bg-glass-1);color:var(--text-body);font-size:13px}
+/* Mid widths: keep the floor clear; departments stay reachable via their cards and keys 1–9. */
+@media(max-width:1280px){
+ #department-nav,#office .scene-note{display:none!important}
+ #camera{flex-wrap:nowrap}
+ #camera #renderer{display:none}
+}
+
+/* The Voice page hosts its own live console; the floating panel would duplicate it. */
+body.hq-voice-page.workspace-open #voice-session{display:none}
+
+/* The department bar never runs under the camera controls (Tool links, zoom, Office life, Smooth 3D). */
+#office #department-nav{max-width:calc(100% - 440px);row-gap:4px}
+
+/* Workflow drawer (7 Oct 2026): opens beside the office, which stays visible; the inspector and the
+   agent rail step aside while it is open. Workspace pages get it as a right-hand sheet; narrow screens
+   get it over the full panel. */
+body.cockpit-ready.has-workflow #panel,body.cockpit-ready.has-workflow #agent-rail{display:none}
+body.cockpit-ready #workflow-drawer:not([hidden]){position:relative;z-index:4;grid-column:2;grid-row:1;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;background:var(--bg-panel);border-left:1px solid var(--border-soft)}
+@media(min-width:1101px){
+ body.cockpit-ready.has-workflow>main,body.cockpit-ready.has-rail.has-workflow>main{grid-template-columns:minmax(0,1fr) min(60%,920px)}
+ body.cockpit-ready.has-workflow #office{grid-column:1}
+}
+body.cockpit-ready.workspace-open #workflow-drawer:not([hidden]){position:fixed;z-index:70;top:var(--shell-gap);right:var(--shell-gap);bottom:calc(var(--dock-height) + var(--shell-gap)*2);width:min(60vw,920px);border:1px solid var(--border-soft);border-radius:var(--radius-card);box-shadow:var(--shadow-xl)}
+/* On workspace pages the office layer is lifted above the panel but stays invisible (and click-through);
+   only the drawer inside it shows. Tool-link wires would cross the drawer, so they rest while it is open. */
+body.cockpit-ready.workspace-open.has-workflow>main{z-index:70;visibility:hidden}
+body.cockpit-ready.workspace-open.has-workflow #workflow-drawer{visibility:visible}
+/* The 3D labels set their own visibility every frame; behind a workspace page they must stay hidden (10 Oct 2026). */
+body.cockpit-ready.workspace-open.has-workflow>main>#office,body.cockpit-ready.workspace-open.has-workflow>main>#office *{visibility:hidden!important}
+body.has-workflow #connector-wires{display:none}
+@media(max-width:1100px){
+ body.cockpit-ready #workflow-drawer:not([hidden]){position:fixed;z-index:70;top:calc(var(--shell-gap) + var(--topbar-height));left:var(--sidebar-width);right:var(--shell-gap);bottom:calc(var(--dock-height) + var(--shell-gap)*2);width:auto;border:1px solid var(--border-soft);border-top:0;border-radius:0 0 var(--radius-card) var(--radius-card)}
+ body.cockpit-ready.workspace-open #workflow-drawer:not([hidden]){top:var(--shell-gap);width:auto;border-top:1px solid var(--border-soft);border-radius:var(--radius-card)}
+}
+/* Notification centre (8 Oct 2026): a popover beside the sidebar; Escape and a click outside close it. */
+#notif-center{position:fixed;inset:auto auto 8px 248px;margin:0;width:360px;max-height:min(70vh,560px);overflow:auto;padding:0;border:0;border-radius:12px;background:var(--bg-elevated);color:var(--text-body);box-shadow:var(--shadow-pop);font:13px/1.4 var(--font-ui)}
+#notif-center header,#notif-center footer{position:sticky;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;background:var(--bg-elevated)}
+#notif-center header{top:0;border-bottom:1px solid var(--border-soft)}#notif-center footer{bottom:0;border-top:1px solid var(--border-soft)}
+#notif-center h2{margin:0;font:var(--weight-medium) 13px/1 var(--font-ui);color:var(--text-primary)}
+#notif-center header button,#notif-center footer button{height:26px;padding:0 8px;border:0;border-radius:6px;background:transparent;color:var(--text-secondary);font-size:12.5px;cursor:pointer}
+#notif-center header button:hover,#notif-center footer button:hover{background:var(--bg-hover);color:var(--text-primary)}#notif-center button:disabled{opacity:.45;cursor:default}
+#notif-center .nc-list{list-style:none;margin:0;padding:4px}
+#notif-center .nc-item{display:grid;grid-template-columns:8px minmax(0,1fr) auto;gap:10px;align-items:start;width:100%;padding:9px 8px;border:0;border-radius:8px;background:transparent;color:inherit;text-align:left;cursor:pointer}
+#notif-center .nc-item:hover,#notif-center .nc-item:focus-visible{background:var(--bg-hover);outline:0}
+#notif-center .nc-dot{width:8px;height:8px;margin-top:5px;border-radius:50%}#notif-center .nc-item[data-unread] .nc-dot{background:var(--status-info)}
+#notif-center .nc-text strong{display:block;color:var(--text-primary);font-weight:var(--weight-medium)}#notif-center .nc-text small{display:block;color:var(--text-tertiary);font-size:12px}
+#notif-center time{color:var(--text-tertiary);font-size:11.5px;white-space:nowrap}
+#notif-center .nc-empty{margin:0;padding:18px 14px;color:var(--text-tertiary)}
+@media(max-width:900px){#notif-center{inset:auto 8px 8px 8px;width:auto}}
+
+/* Notification centre on a phone (10 Oct 2026): a full-width sheet above the bottom edge. */
+#notif-center.nc-sheet{left:8px;right:8px;bottom:8px;width:auto;max-width:none;max-height:70dvh}
+
+/* Offline banner (10 Oct 2026). */
+#offline-banner{position:fixed;z-index:200;top:8px;left:50%;transform:translateX(-50%);max-width:min(720px,calc(100vw - 32px));padding:9px 14px;border:1px solid color-mix(in srgb,var(--status-warn) 50%,var(--border-soft));border-radius:10px;background:var(--bg-elevated);color:var(--text-body);font-size:13px;box-shadow:var(--shadow-xl)}
+#offline-banner[hidden]{display:none}
+#offline-banner strong{color:var(--status-warn);margin-right:4px}
+body.hq-recording #chief-dock .dock-more summary,body.hq-demo #chief-dock .dock-more summary{color:var(--text-primary);background:var(--bg-active);box-shadow:inset 0 0 0 1px var(--border-mid)}
+
+/* With the workflow drawer beside the office, the numbered department list would overlap the floor cards. */
+body.has-workflow #department-nav{display:none}

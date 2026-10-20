@@ -1,0 +1,62 @@
+/* Creator Lab inside Agent HQ (5 October 2026): the original app, dressed in the office tokens so it
+   reads as one product. Navigation moves to the workspace tabs; the app's own sidebar becomes a slim
+   toolbar with the run picker and actions. Colours and type come from /static/tokens.css. */
+@import url('/static/tokens.css');
+:root{
+ --font-ui:'Inter Variable',Inter,system-ui,sans-serif;--font-editorial:var(--font-ui);--font-mono:'JetBrains Mono',ui-monospace,monospace;
+ --radius-card:12px;--radius-control:6px;--side-w:0px;
+ /* Lime stays reserved for live signals in the office; the app's accents become neutral. */
+ --accent:var(--text-primary);--accent-white:var(--text-primary);--accent-glow:rgba(255,255,255,.12);
+ --text-tertiary:var(--color-fog);--text-secondary:var(--color-mist);
+ /* Same names, different meaning in the office tokens: Creator Lab's --soft is text, --radius is a card. */
+ --soft:var(--color-fog);--radius:var(--radius-card);--line:var(--border-soft);
+ --bg:var(--bg-panel);--side:var(--bg-panel);--surface:rgba(255,255,255,.02);--raised:rgba(255,255,255,.05);
+}
+html,body{background:var(--bg-panel)!important;color:var(--color-mist)!important}
+/* Creator Lab uses --text-body as a font size; never use it as a colour here. */
+body{font:13.5px/1.55 var(--font-ui);font-feature-settings:var(--font-features)}
+/* Sidebar → slim toolbar: run picker, view actions and connection status. */
+.sidebar{position:sticky!important;top:0;inset:auto!important;width:auto!important;height:auto!important;display:flex!important;flex-direction:row!important;align-items:center;flex-wrap:wrap;gap:10px;padding:10px 22px!important;border-right:0!important;border-bottom:1px solid var(--border-soft)!important;background:rgba(15,16,17,.94)!important;backdrop-filter:blur(8px);z-index:40;overflow:visible!important}
+.sidebar .brand,.sidebar nav,.sidebar .nav-label{display:none!important}
+.sidebar select#run-select{width:auto!important;min-width:280px;max-width:420px;height:32px;padding:0 10px!important;border-radius:6px;background:rgba(255,255,255,.03);border:1px solid var(--border-soft);color:var(--text-primary);font:510 12.5px/1 var(--font-ui)}
+.sidebar .side-actions{display:flex!important;flex-direction:row!important;gap:6px;margin:0!important}
+.sidebar .side-actions button{padding:0 10px!important;height:30px;font-size:12px!important;white-space:nowrap}
+.sidebar .aside-bottom{display:flex!important;flex-direction:row!important;align-items:center;gap:10px;margin:0 0 0 auto!important;padding:0!important;border:0!important}
+.sidebar .aside-bottom small{display:none}
+.focus-bar{display:none!important}
+main{margin-left:0!important;padding:18px 22px 28px!important;max-width:none!important}
+/* Calmer headline: no oversized serif hero. */
+h1{font:590 22px/1.25 var(--font-ui)!important;letter-spacing:-.012em!important;margin:6px 0 6px!important}
+h1 span{color:var(--text-secondary)!important;font-style:normal!important;font-family:var(--font-ui)!important}
+h2,h3{font-family:var(--font-ui)!important;letter-spacing:-.01em}
+.page-head{padding-bottom:14px!important;margin-bottom:14px!important}
+.eyebrow,.panel-label,.stage-heading small,.metric-card span,.metric-card small{font-family:var(--font-ui)!important;letter-spacing:.04em!important;font-weight:510!important;text-transform:none}
+/* Cards, controls and stats on the office scale. */
+.metric-card{min-height:0!important;padding:14px 16px!important;border-radius:12px!important;background:rgba(255,255,255,.02)!important;border-color:var(--border-soft)!important}
+.metric-card:before{background:var(--border-mid)!important}
+.metric-card strong,.metric-card b,.metric-value{font:590 26px/1.15 var(--font-ui)!important;letter-spacing:-.02em!important}
+button{border-radius:6px!important;padding:7px 12px!important;font:510 12.5px/1.2 var(--font-ui)!important;background:transparent!important;border:1px solid var(--border-soft)!important;color:var(--color-mist)!important}
+button:hover:not(:disabled){background:rgba(255,255,255,.05)!important;border-color:var(--border-mid)!important;color:var(--text-primary)!important}
+select,input,textarea{border-radius:6px!important;font-family:var(--font-ui)!important;background:rgba(255,255,255,.02)!important;border:1px solid var(--border-soft)!important;color:var(--text-primary)!important}
+section,.explorer,.findings,.inspector,.stage-wrap{border-radius:12px}
+a{color:var(--text-primary)}
+::selection{background:rgba(208,214,224,.24)}
+
+/* The office header already carries the title: keep only the run actions and sync note. */
+.page-title{display:none!important}
+.page-head{justify-content:flex-end!important;align-items:center!important;padding-bottom:8px!important;margin-bottom:12px!important;border-bottom:0!important}
+.sync{flex-direction:row!important;align-items:center!important;gap:12px!important;max-width:none!important}
+main{padding:14px clamp(20px,3vw,40px) 40px!important}
+.sidebar{padding:10px clamp(20px,3vw,40px)!important}
+
+/* One page with the office (6 Oct 2026): no inner scroll; viewport-sized parts use the visible office height. */
+html,body{height:auto!important;min-height:0!important;overflow:visible!important}
+html{scroll-behavior:auto!important}
+.sidebar{position:relative!important}
+.focused .stage{height:calc(var(--hq-view-h,100vh) - 360px)!important}
+.focused .inspector{max-height:calc(var(--hq-view-h,100vh) - 285px)!important}
+#toast{position:absolute!important;bottom:auto!important;top:calc(var(--hq-view-top,0px) + var(--hq-view-h,100vh) - 90px)!important}
+
+/* Aligned with the office content column: no extra side padding inside the frame. */
+main{padding-left:0!important;padding-right:0!important}
+.sidebar{padding-left:0!important;padding-right:0!important}

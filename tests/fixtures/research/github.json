@@ -1,0 +1,6 @@
+[
+  {"full_name": "openlab-tools/agent-runner", "html_url": "https://github.com/openlab-tools/agent-runner", "description": "A small runtime for AI agents that call tools, keep notes and ask before they act.", "owner": {"login": "openlab-tools", "type": "Organization"}, "stargazers_count": 2140, "watchers_count": 2140, "language": "TypeScript", "hoursAgo": 30},
+  {"full_name": "quietbyte/inbox-agent", "html_url": "https://github.com/quietbyte/inbox-agent", "description": "Sorts your inbox with an AI agent and drafts replies for review.", "owner": {"login": "quietbyte", "type": "User"}, "stargazers_count": 640, "watchers_count": 640, "language": "Python", "hoursAgo": 70},
+  {"full_name": "fieldnotes-dev/mcp-calendar", "html_url": "https://github.com/fieldnotes-dev/mcp-calendar", "description": "An MCP server that lets agents read and plan in your calendar.", "owner": {"login": "fieldnotes-dev", "type": "User"}, "stargazers_count": 215, "watchers_count": 215, "language": "Go", "hoursAgo": 110},
+  {"full_name": "tinyworks/agent-evals", "html_url": "https://github.com/tinyworks/agent-evals", "description": "Simple evaluations for agent workflows: does it finish the task, and what does it cost?", "owner": {"login": "tinyworks", "type": "Organization"}, "stargazers_count": 98, "watchers_count": 98, "language": "Python", "hoursAgo": 150}
+]

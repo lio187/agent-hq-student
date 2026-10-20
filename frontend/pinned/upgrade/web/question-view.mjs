@@ -1,0 +1,17 @@
+import {escapeHTML as esc} from './message-view.mjs';
+const drafts=new Map(),answered=new Set();
+export function renderQuestion(root,run,onAnswer){
+ const q=run?.status==='waiting_for_input'&&run.clarification;root.closest('#chat')?.classList.toggle('has-question',!!q);
+ if(!q){root.hidden=true;root.dataset.question='';root.replaceChildren();return}
+ const key=run.id+':'+q.request_id;root.hidden=false;if(root.dataset.question===key)return;root.dataset.question=key;
+ if(answered.has(key)){root.innerHTML='<p role="status">Answer received. Waiting for the agent…</p>';return}
+ let pending=null;try{pending=JSON.parse(sessionStorage.getItem('hq-question-pending:'+key)||'null')}catch{}
+ const draft=drafts.get(key)||pending?.draft||{choices:[],text:''};
+ root.innerHTML=`<form class="question-form"><div class="question-fields"><span class="eyebrow">AGENT QUESTION</span><h3>${esc(q.question)}</h3><div class="question-choices">${(q.choices||[]).map((c,i)=>`<label><input type="${q.multi_select?'checkbox':'radio'}" name="question-choice" value="${i}" ${draft.choices.includes(i)?'checked':''}><span>${esc(c)}</span></label>`).join('')}</div><label>${q.choices?.length?'Or write an answer':'Your answer'}<textarea class="question-answer" rows="2" maxlength="8000">${esc(draft.text)}</textarea></label></div><p class="question-error" role="alert"></p><div class="actions"><button type="button" class="question-skip">Skip question</button><button type="submit" class="primary">Send answer</button></div><p class="muted">${q.multi_select?'Choose up to four answers. ':''}This question closes at ${esc(new Date(q.expires_at*1000).toLocaleTimeString())}.</p></form>`;
+ const form=root.querySelector('form'),text=form.querySelector('textarea'),button=form.querySelector('[type=submit]');
+ const save=()=>{const choices=[...form.querySelectorAll('input:checked')].map(c=>Number(c.value));drafts.set(key,{choices,text:text.value});if(drafts.size>50)drafts.delete(drafts.keys().next().value);button.disabled=!text.value.trim()&&!choices.length};
+ form.oninput=save;save();
+ const send=async(skip=false)=>{save();const d=drafts.get(key);const values=d.choices.map(i=>q.choices[i]);const answer=q.multi_select?(d.text.trim()?[d.text.trim()]:values):(d.text.trim()||values[0]);const payload=pending?.payload||{request_id:q.request_id,...(skip?{skip:true}:{answer})};pending={payload,draft:{...d}};sessionStorage.setItem('hq-question-pending:'+key,JSON.stringify(pending));form.querySelectorAll('button,input,textarea').forEach(e=>e.disabled=true);form.querySelector('.question-error').textContent='';try{await onAnswer(run,payload);answered.add(key);drafts.delete(key);sessionStorage.removeItem('hq-question-pending:'+key);if(root.dataset.question===key)root.innerHTML='<p role="status">Answer received. Waiting for the agent…</p>'}catch(error){if(root.dataset.question!==key)return;form.querySelector('.question-error').textContent=error.message;form.querySelectorAll('button,input,textarea').forEach(e=>e.disabled=true);button.disabled=false;button.textContent=pending.payload.skip?'Retry skipping':'Retry same answer'}};
+ form.onsubmit=e=>{e.preventDefault();send()};form.querySelector('.question-skip').onclick=()=>send(true);
+ if(pending){form.querySelectorAll('button,input,textarea').forEach(e=>e.disabled=true);button.disabled=false;button.textContent=pending.payload.skip?'Retry skipping':'Retry same answer';form.querySelector('.question-error').textContent='An earlier answer has no confirmation yet. Retry to check its receipt.'}
+}

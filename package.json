@@ -1,0 +1,11 @@
+{
+  "name": "agent-hq-student",
+  "private": true,
+  "description": "187N Agent HQ (student edition) for macOS: build tools only (the app itself is Swift). The shared VERSION file is the version.",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "acorn": "8.17.0",
+    "esbuild": "0.25.10",
+    "magic-string": "0.30.21"
+  }
+}

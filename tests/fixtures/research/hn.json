@@ -1,0 +1,6 @@
+[
+  {"objectID": "50100001", "title": "Show HN: Agent Runner, a small runtime for AI agents", "url": "https://github.com/openlab-tools/agent-runner", "author": "quietmaker", "points": 312, "num_comments": 96, "hoursAgo": 26},
+  {"objectID": "50100002", "title": "What we learned running AI agents for customer support for six months", "url": "https://blog.example.com/agents-in-support", "author": "supportlead", "points": 188, "num_comments": 140, "hoursAgo": 50},
+  {"objectID": "50100003", "title": "Ask HN: How do you keep AI agents from going over budget?", "url": null, "author": "costwatcher", "points": 74, "num_comments": 61, "hoursAgo": 90},
+  {"objectID": "50100004", "title": "A week-old story that is outside the window", "url": "https://news.example.org/too-old", "author": "someone", "points": 900, "num_comments": 300, "hoursAgo": 200}
+]

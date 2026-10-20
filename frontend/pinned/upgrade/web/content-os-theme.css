@@ -1,0 +1,26 @@
+/* Linear skin for the bridged Leon Content OS (4 October 2026). Loaded after the console's own
+   tokens, so its variable names resolve to the Agent HQ system; behaviour is unchanged. */
+@import url('/static/tokens.css');
+:root,:root[data-theme],:root[data-theme=dark],:root[data-theme=light]{
+ color-scheme:dark;
+ --canvas:var(--color-carbon);--canvas-2:var(--color-void);--surface:#131416;--surface-2:var(--color-obsidian);--surface-3:var(--color-graphite);
+ --ink:var(--color-paper);--ink-strong:var(--color-paper);--ink-body:var(--color-mist);--ink-label:var(--color-fog);--ink-muted:var(--color-fog);--ink-faint:var(--color-ash);--ink-on-dark:var(--color-paper);
+ --line:var(--color-graphite);--line-strong:var(--color-smoke);--line-faint:rgba(255,255,255,.05);
+ --accent:var(--color-mist);--accent-bright:var(--color-paper);--accent-ink:var(--color-paper);--accent-glow:rgba(208,214,224,.18);--accent-wash:rgba(255,255,255,.05);--accent-wash-2:rgba(255,255,255,.08);
+ --gold:var(--color-amber);--gold-bright:var(--color-amber);--mark-gradient:none;
+ --st-live:var(--color-pulse-green);--st-live-tint:rgba(39,166,68,.14);--st-error:var(--color-coral-red);--st-error-tint:rgba(235,87,87,.14);--st-warn:var(--color-amber);--st-warn-tint:rgba(232,163,61,.14);--st-idle:var(--color-ash);--st-idle-tint:rgba(255,255,255,.05);--st-pending:var(--color-iris-violet);
+ --f-display:var(--font-ui);--f-sans:var(--font-ui);--f-serif:var(--font-ui);--f-mono:var(--font-ui);
+ --r-xs:4px;--r-sm:6px;--r-md:12px;--r-lg:12px;--r-pill:9999px;--chamfer:0px;
+ --shadow-xs:none;--shadow-sm:none;--shadow-md:0 8px 24px rgba(0,0,0,.4);--shadow-lg:0 4px 32px rgba(8,9,10,.6);
+}
+html body{background:var(--color-carbon);color:var(--color-mist);font-family:var(--font-ui);font-feature-settings:var(--font-features);-webkit-font-smoothing:antialiased}
+html body h1,html body h2,html body h3{font-family:var(--font-ui);font-weight:590;letter-spacing:-.012em;color:var(--color-paper)}
+/* Buttons: neutral outline by default, the one filled action in lime. */
+html body .btn{border-radius:6px;font-family:var(--font-ui);font-weight:510;letter-spacing:-.01em;text-transform:none}
+html body .btn-primary{background:transparent;color:var(--color-paper);border-color:var(--color-smoke)}
+html body .btn-primary:hover:not(:disabled){background:rgba(255,255,255,.05);border-color:var(--color-mist)}
+html body .btn-primary.btn-fill{background:var(--color-acid-lime);color:var(--color-void);border-color:var(--color-acid-lime);box-shadow:none;transform:none}
+html body .btn-ghost{background:transparent;color:var(--color-mist);border-color:var(--color-graphite)}
+/* Labels: the Agent HQ small-caps rhythm instead of wide-tracked mono. */
+html body :is(.appr-kind,.approved-count,.bc-act,.bc-kind,.bc-tag,.bf-plat,.board-col-sub,.board-sum-stat,.brand-name,.chip,.color-note,.cp-aspect,.decided,.dl,.field-lbl,.how summary,.id-label,.id-reach,.idea-struct-lbl,.ingest-count,.m-col-head,.m-count,.m-hint-lbl,.m-pace,.ov-sig-link,.ov-tile-lbl,.pill,.qcol-head,.qkind,.rail-group-lbl,.rail-item,.rail-tag,.rc-group-head,.rc-stat-lbl,.rollup-lbl,.run-header,.save-note,.sg-done,.sg-plat,.source-note,.src-k,.step-collapsed,.step-tab,.tab-counter,.taste-kpi-lbl,.taste-lbl,.ws-done,/* Angle chip: a neutral hairline pill (no accent region),/* Inline reason next to a gated Run button. Muted,/* band tags */
+.band,.rc-result-head,.run-reason,.today-angle){letter-spacing:.04em!important;font-family:var(--font-ui)!important;font-weight:510}

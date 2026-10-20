@@ -1,0 +1,2 @@
+# Pricing
+Linked from [[onboarding]].

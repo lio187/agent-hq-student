@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[OpenAI News]]></title>
+        <description><![CDATA[The OpenAI blog]]></description>
+        <link>https://openai.com/news</link>
+        <generator>OpenAI</generator>
+        <lastBuildDate>{{RFC822:-1}}</lastBuildDate>
+        <atom:link href="https://openai.com/news/rss.xml" rel="self" type="application/rss+xml"/>
+        <language><![CDATA[en-US]]></language>
+        <item>
+            <title><![CDATA[New tools for building agents that work across apps]]></title>
+            <description><![CDATA[Agents can now hand work to each other and keep a shared memory, with approvals for anything that changes data.]]></description>
+            <link>https://openai.com/index/example-agent-tools</link>
+            <guid isPermaLink="true">https://openai.com/index/example-agent-tools</guid>
+            <category><![CDATA[Product]]></category>
+            <pubDate>{{RFC822:-20}}</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[How small businesses use AI agents for &quot;busy work&quot;]]></title>
+            <description><![CDATA[<p>Three examples of agents that answer email, plan the week and keep the books tidy.</p>]]></description>
+            <link>https://openai.com/index/example-small-business-agents</link>
+            <guid isPermaLink="true">https://openai.com/index/example-small-business-agents</guid>
+            <category><![CDATA[Stories]]></category>
+            <pubDate>{{RFC822:-60}}</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[An older post outside the two-week window]]></title>
+            <description><![CDATA[This item is older than 14 days and should not show.]]></description>
+            <link>https://openai.com/index/example-old-post</link>
+            <guid isPermaLink="true">https://openai.com/index/example-old-post</guid>
+            <pubDate>{{RFC822:-500}}</pubDate>
+        </item>
+    </channel>
+</rss>

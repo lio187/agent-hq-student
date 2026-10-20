@@ -1,0 +1,141 @@
+/* Slide templates for the carousel and story maker: one stylesheet for every template.
+   The app adds the brand as custom properties before this file (BrandKit.css):
+     --bg --fg --accent --muted        colours a slide may swap (the bold style inverts some slides)
+     --brand-bg --brand-accent          the brand's own colours, never swapped
+     --accent-ink --on-accent --on-accent-soft --on-accent-line --line --soft
+     --font-heading --font-body
+   Body classes: fmt-carousel|fmt-story, style-clean|style-bold|style-editorial, tpl-<template>, is-first, is-last, has-logo.
+   Text sizes are picked from the text length (data-size xl, l, m, s, xs), so long text never runs off the slide. */
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{width:1080px;height:1350px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:40px;line-height:1.38;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-kerning:normal;font-synthesis:none}
+body.fmt-story{height:1920px}
+.slide{position:relative;display:flex;flex-direction:column;width:1080px;height:100%;padding:88px 96px 84px}
+/* Stories: the profile bar (top) and the reply field (bottom) cover part of the screen; text stays clear of both. */
+.fmt-story .slide{padding:250px 96px 340px}
+
+/* Top bar: logo (or brand name) and the slide number. */
+.top{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px;font-size:28px;line-height:1;color:var(--muted)}
+.brand{display:flex;align-items:center;gap:18px;min-width:0}
+.logo{display:block;height:64px;width:auto;max-width:280px;object-fit:contain}
+.name{font-family:var(--font-heading);font-weight:600;font-size:30px;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.has-logo .name{display:none}
+.count{margin-left:auto;font-variant-numeric:tabular-nums;letter-spacing:.04em;white-space:nowrap}
+.count b{font-weight:600;color:var(--fg)}
+
+/* Content */
+.content{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:40px;overflow:hidden;padding:40px 0}
+.kicker{font-size:28px;line-height:1.2;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.h{font-family:var(--font-heading);font-weight:700;line-height:1.02;letter-spacing:-.025em;overflow-wrap:break-word;text-wrap:balance}
+.h em{font-style:normal;color:var(--accent)}
+.h[data-size=xl]{font-size:148px}
+.h[data-size=l]{font-size:116px}
+.h[data-size=m]{font-size:90px;line-height:1.04}
+.h[data-size=s]{font-size:72px;line-height:1.08}
+.h[data-size=xs]{font-size:58px;line-height:1.12}
+.b{max-width:880px;color:var(--fg);opacity:.8;overflow-wrap:break-word;text-wrap:pretty}
+.b em{font-style:normal;font-weight:600;color:var(--accent);opacity:1}
+.b[data-size=l]{font-size:46px}
+.b[data-size=m]{font-size:40px}
+.b[data-size=s]{font-size:36px}
+.b[data-size=xs]{font-size:31px}
+.rule{width:120px;height:12px;border-radius:6px;background:var(--accent)}
+.kicker:empty,.b:empty,.foot:empty,.items:empty,.pill:empty,.handle:empty,.name:empty{display:none}
+
+/* Bottom bar: the handle, a short line and (on a carousel) a swipe arrow. */
+.bottom{display:flex;align-items:center;gap:24px;min-height:72px;font-size:28px;line-height:1.25;color:var(--muted)}
+.handle{font-weight:600;color:var(--fg);white-space:nowrap}
+.foot{flex:1;min-width:0;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.handle:empty+.foot{text-align:left}
+.next{flex:none;display:grid;place-items:center;width:72px;height:72px;margin-left:auto;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:36px;line-height:1}
+.is-last .next{display:none}
+
+/* Cover and hook: the promise, large. */
+.tpl-cover .content{justify-content:flex-end;gap:36px;padding-bottom:56px}
+.tpl-cover .h[data-size=xl]{font-size:164px}
+.tpl-cover .h[data-size=l]{font-size:128px}
+.tpl-hook .content{gap:44px}
+
+/* Point and step: a number, the point, a short explanation. */
+.num{font-family:var(--font-heading);font-weight:700;font-size:64px;line-height:1;letter-spacing:-.02em;color:var(--accent);font-variant-numeric:tabular-nums}
+.num::after{content:"";display:block;width:72px;height:6px;margin-top:30px;border-radius:3px;background:var(--line)}
+.badge{display:grid;place-items:center;width:128px;height:128px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-family:var(--font-heading);font-weight:700;font-size:52px;line-height:1;font-variant-numeric:tabular-nums}
+
+/* List: numbered lines. */
+.items{list-style:none;display:flex;flex-direction:column;counter-reset:i}
+.items li{counter-increment:i;display:grid;grid-template-columns:96px 1fr;align-items:baseline;padding:28px 0;border-top:2px solid var(--line);font-size:40px;line-height:1.28}
+.items li:last-child{border-bottom:2px solid var(--line)}
+.items li::before{content:counter(i,decimal-leading-zero);font-family:var(--font-heading);font-weight:700;font-size:34px;color:var(--accent);font-variant-numeric:tabular-nums}
+.items li em{font-style:normal;font-weight:600;color:var(--accent)}
+.items[data-n="5"] li,.items[data-n="6"] li{padding:22px 0;font-size:36px}
+.items[data-n="7"] li,.items[data-n="8"] li{padding:16px 0;font-size:32px}
+.tpl-list .content{gap:48px}
+.tpl-list .h[data-size=xl],.tpl-list .h[data-size=l]{font-size:96px}
+
+/* Quote */
+.mark{height:150px;font-family:var(--font-heading);font-weight:700;font-size:300px;line-height:.86;color:var(--accent)}
+.tpl-quote .h{font-weight:600;letter-spacing:-.02em}
+.tpl-quote .h[data-size=xl],.tpl-quote .h[data-size=l]{font-size:104px}
+.tpl-quote .b{font-size:34px;opacity:1;color:var(--muted)}
+.tpl-quote .b::before{content:"\2014\00a0"}
+
+/* Call to action */
+.tpl-cta .content{justify-content:center;gap:44px}
+.pill{align-self:flex-start;display:inline-flex;align-items:center;max-width:100%;padding:28px 44px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:38px;font-weight:700;line-height:1.1}
+.sign{display:flex;align-items:center;gap:22px;font-size:34px;color:var(--fg)}
+.sign .logo{height:88px}
+.sign .handle{font-size:38px}
+
+/* Stories: bigger type for a phone held upright. */
+.fmt-story .h[data-size=xl]{font-size:168px}
+.fmt-story .h[data-size=l]{font-size:132px}
+.fmt-story .h[data-size=m]{font-size:102px}
+.fmt-story .h[data-size=s]{font-size:82px}
+.fmt-story .h[data-size=xs]{font-size:66px}
+.fmt-story .b[data-size=l]{font-size:52px}
+.fmt-story .b[data-size=m]{font-size:45px}
+.fmt-story .b[data-size=s]{font-size:38px}
+.fmt-story .b[data-size=xs]{font-size:32px}
+.fmt-story .content{gap:48px}
+.fmt-story .bottom{justify-content:center}
+.fmt-story .bottom .foot{flex:none;text-align:center}
+
+/* Poll-style question: answer options in rounded bars. */
+.tpl-poll .items{gap:24px}
+.tpl-poll .items li{display:flex;align-items:center;gap:32px;padding:34px 40px;border:3px solid var(--line);border-radius:40px;font-size:46px;line-height:1.2;background:var(--soft)}
+.tpl-poll .items li:last-child{border-bottom:3px solid var(--line)}
+.tpl-poll .items li::before{content:counter(i,upper-alpha);flex:none;display:grid;place-items:center;width:76px;height:76px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-family:var(--font-body);font-weight:700;font-size:34px}
+.tpl-poll .content{gap:56px}
+
+/* Clean (the default): calm, generous space, the accent in small details. */
+
+/* Bold: heavy type; the first and last slide in the accent colour. */
+.style-bold .h{font-weight:800;letter-spacing:-.03em;line-height:.98}
+.style-bold .h[data-size=m]{line-height:1.02}
+.style-bold .h[data-size=s],.style-bold .h[data-size=xs]{line-height:1.08}
+.style-bold .kicker{font-weight:800}
+.style-bold .num{font-size:120px;font-weight:800}
+.style-bold .num::after{display:none}
+.style-bold .items li::before{font-weight:800}
+.style-bold.tpl-cover,.style-bold.tpl-hook,.style-bold.tpl-cta{background:var(--brand-accent);--bg:var(--brand-accent);--fg:var(--on-accent);--muted:var(--on-accent-soft);--accent:var(--on-accent);--accent-ink:var(--brand-accent);--line:var(--on-accent-line)}
+.style-bold.tpl-cover .h em,.style-bold.tpl-hook .h em,.style-bold.tpl-cta .h em{text-decoration:underline;text-decoration-thickness:.07em;text-underline-offset:.1em}
+.style-bold .pill{border-radius:20px}
+
+/* Editorial: lighter headings, italics, hairlines and centred openers. */
+.style-editorial .h{font-weight:400;letter-spacing:-.015em;line-height:1.06}
+.style-editorial .h em{font-style:italic}
+.style-editorial .kicker{font-weight:500;letter-spacing:.24em;color:var(--muted)}
+.style-editorial .top{padding-bottom:30px;border-bottom:2px solid var(--line)}
+.style-editorial .bottom{padding-top:26px;border-top:2px solid var(--line)}
+.style-editorial .rule{width:180px;height:2px;border-radius:0}
+.style-editorial .num{font-weight:400;font-style:italic;font-size:88px}
+.style-editorial .num::after{height:2px}
+.style-editorial .items li::before{font-weight:400;font-style:italic}
+.style-editorial .mark{font-weight:400}
+.style-editorial.tpl-quote .h{font-weight:400;font-style:italic}
+.style-editorial .next{background:transparent;color:var(--fg);border:2px solid var(--line)}
+.style-editorial.tpl-cover .content,.style-editorial.tpl-hook .content,.style-editorial.tpl-quote .content,.style-editorial.tpl-cta .content{align-items:center;text-align:center}
+.style-editorial .pill{align-self:center;border-radius:0;padding:26px 48px}
+.style-editorial .sign{justify-content:center}
+.style-editorial.tpl-cover .content{justify-content:center;padding-bottom:40px}

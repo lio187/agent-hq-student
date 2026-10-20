@@ -1,0 +1,2 @@
+Fix these posts: RLA005
+{"posts":[{"id":"RLA005","hook":"Why do some videos get ten times the views of the rest?","dimensions":{"mechanism":"curiosity","structure":"story","opening":"question","topic":"marketing","evidence":"personal","emotion":"surprise","specificity":"principle","cta":"none"},"segments":[{"index":0,"role":"hook"},{"index":1,"role":"example"},{"index":2,"role":"payoff"}]}]}

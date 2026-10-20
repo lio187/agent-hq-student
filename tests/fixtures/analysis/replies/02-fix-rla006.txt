@@ -1,0 +1,2 @@
+Fix these posts: RLA006
+{"posts":[{"id":"RLA006","hook":"A quiet day in the studio.","dimensions":{"mechanism":"direct","structure":"story","opening":"claim","topic":"cooking","evidence":"none","emotion":"neutral","specificity":"none","cta":"none"},"segments":[{"index":0,"role":"setup"},{"index":1,"role":"other"}]}]}

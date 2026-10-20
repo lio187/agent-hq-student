@@ -1,0 +1,2 @@
+Write five different opening hooks
+{"hooks": ["I got an hour back every morning with five small tools.", "Stop doing these five tasks by hand.", "The five tools that run my mornings.", "One hour a day, back in your pocket.", "My boring tools save me 5 hours a week."]}

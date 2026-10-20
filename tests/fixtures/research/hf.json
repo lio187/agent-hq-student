@@ -1,0 +1,5 @@
+[
+  {"id": "open-models/tiny-agent-7b", "likes": 1320, "trendingScore": 410, "downloads": 52000, "pipeline_tag": "text-generation", "library_name": "transformers", "tags": ["transformers", "text-generation", "agents"], "daysAgo": 6},
+  {"id": "speechlab/fast-whisper-small", "likes": 860, "trendingScore": 220, "downloads": 120000, "pipeline_tag": "automatic-speech-recognition", "library_name": "transformers", "tags": ["audio", "speech"], "daysAgo": 20},
+  {"id": "vision-co/doc-reader-2", "likes": 455, "trendingScore": 96, "downloads": 8800, "pipeline_tag": "image-text-to-text", "library_name": "transformers", "tags": ["vision", "documents"], "daysAgo": 3}
+]
